@@ -1,0 +1,161 @@
+{% extends "base_site.html" %}
+
+{% block title %} Karyawan {% endblock title %}
+
+
+{% block stylesheets %}
+  {{ super() }}
+  <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+  
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">List Assignment</h3>
+                    </div>
+
+                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel">Confirm Approve</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Anda Berencana Approve Assignment ini.</p>
+                                    <p>Apakah ingin melanjutkan?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-success btn-ok">Approve</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                    <th style="text-align: center;"> Nama </th>
+                                    <th style="text-align: center;"> Date Assignment </th>
+                                    <th style="text-align: center;"> Application Name </th>
+                                    <th style="text-align: center;"> Application Type </th>
+                                    <th style="text-align: center;"> Site </th>
+                                    <th style="text-align: center;"> Supervisor </th>
+                                    <th style="text-align: center;"> Approve </th>
+                                    
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for assignment in karyawan %}
+                                    <tr>
+                                        <td> <a href="/userassignm/{{ assignment['id_assignment'] }}">{{assignment["fullname"]}}</a> </td>
+                                        <td> {{assignment["dateassignment"]}} </td>
+                                        <td> {{assignment["applicationname"]}} </td>
+                                        <td> {{assignment["assignmenttype"]}} </td>
+                                        <td> {{assignment["site"]}} </td>
+                                        <td> {{assignment["supervisor"]}} </td>
+                                        <td style="text-align: center;">  
+                                           
+                                            <button class="btn btn-success btn-sm" value="{{ assignment['id_assignment'] }}" name="id_assignment" data-record-id="{{ assignment['id_assignment'] }}"  data-toggle="modal" data-target="#confirm-delete">
+                                                Approve
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% include "site_template/footer.html" %}
+    </div>
+</div>        
+
+{% endblock content %}
+
+
+
+ {% block javascripts %}
+    <!-- Core -->
+            <script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    
+    <!-- Argon JS -->
+    <script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+          <script type = "text/JavaScript">
+              $(document).ready(function() {
+              $('#example').DataTable({
+                  "pageLength": 25,
+                  "language": {
+                        "paginate": {
+                        "previous": "Prev",
+                        "last": "Next"
+                        }
+                    }
+                
+              })
+          } );
+      </script>
+
+      <script>
+        $('#confirm-approve').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            
+            $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+        });
+    </script>
+
+    <script>
+        $('#confirm-delete').on('click', '.btn-ok', function(e) {
+            var $modalDiv = $(e.delegateTarget);
+            var id = $(this).data('recordId');
+            // $.ajax({url: '/api/record/' + id, type: 'DELETE'})
+            //$.post('/assignment?id_assignment=' + id).then()
+            $.post('/assignment', { id_assignment: id} ).then()
+             $modalDiv.addClass('loading');
+                setTimeout(function() {
+                    $modalDiv.modal('hide').removeClass('loading');
+                }, 1000)
+             document.location.reload();
+        });
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            var data = $(e.relatedTarget).data();
+            $('.title', this).text(data.recordTitle);
+            $('.btn-ok', this).data('recordId', data.recordId);
+        });
+    </script>
+
+  {% endblock javascripts %}
+
+
+
+{% block extra_javascripts %}
+{% endblock %}

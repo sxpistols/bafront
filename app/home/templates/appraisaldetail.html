@@ -1,0 +1,92 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+
+
+<!-- Header -->
+<!-- Header container -->
+
+
+<!-- Page content -->
+
+<div class="row">
+
+    <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+
+            <div class="card-body">
+                {% for emp in karyawan %}
+                <form class="forms-sample" method="POST" id="updatekaryawan" role="form">
+                    <input type="hidden" id="appraisalid" value="{{ emp.appraisalid }}"">
+                    <h4 class="heading mb-1">Appraisal Information </h4>
+                    
+                    <h6 class="title mb-4">{{ emp.fullname }}</h6>
+                    <h6 class="subtitle mb-1">{{ emp.posisi }} - {{ emp.periode }}</h6>
+                    <br><br>
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">Performance Score</label>
+                                    <input type="text" id="input-username" name="username"
+                                        class="form-control form-control-alternative" disabled
+                                        value="{{ emp.performance }}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-first-name">Potential Score</label>
+                                    <input type="text" id="input-first-name" name="fullname"
+                                        class="form-control form-control-alternative"
+                                        value="{{ emp.potential }}" disabled>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-email">Attitude Score</label>
+                                    <input type="text" id="input-email" name="email"
+                                        class="form-control form-control-alternative" disabled
+                                        value="{{ emp.attitude }}">
+                                </div>
+                            </div>
+
+                        </div>
+                        
+                        <div class="row">
+                            
+                            <div class="col-sm-1">
+                                <button type="submit" name='delete' id="delete" class="btn btn-danger btn-sm"> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+                    <!-- Description -->
+
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% include "site_template/footer.html" %}
+
+    </div>
+
+    {% endblock content %}
+
+    {% block javascripts %}
+    {{ super()}}
+    {% endblock javascripts %}

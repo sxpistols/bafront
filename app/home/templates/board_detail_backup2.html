@@ -1,0 +1,163 @@
+{% extends "base_site.html" %}
+
+{% block title %} Board Detail {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+
+<link href="{{ url_for('static', filename='assets/css/bulma.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+<!-- Icons -->
+<link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}"
+  rel="stylesheet">
+<!-- CSS Files -->
+<link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container" style="padding-top: 20px;padding-left: 10px;">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header bg-transparent">
+          <h3 class="mb-0"> {{ boardname }} Members</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table style="width: 600;">
+              <tbody>
+                {% for cl in members %}
+                {% if (loop.index % 3) == 1 %}
+                <tr>
+                  {% endif %}
+                  <td style="width: 250px;"> {{cl["fullname"] }} </td>
+                  {% if (loop.index % 3) == 0 %}
+                </tr>
+                {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <form class="forms-sample" method="POST" id="downloadreport" role="form">
+
+          <div class="card-header bg-transparent">
+            <h3 class="mb-0">Today Activities</h3>
+            <br>
+            <input type="date" class="form-control col-sm-2 form-control-sm" name="tanggal" id="dateDefault"
+              data-date="" value="" required>
+            <br>
+            <button type="submit" name='sdownload' id="show" class="btn btn-success btn-sm"> Show </button>
+            <button type="submit" name='ddownload' id="daily" class="btn btn-primary btn-sm"> Report Daily
+            </button>
+            <button type="submit" name='mdownload' id="showModal" class="btn btn-primary btn-sm"> Report
+              Monthly </button>
+          </div>
+        </form>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table id="example" class="display table table-striped table-bordered" style="width: 100%;">
+              <thead>
+                <tr>
+                  <th style="text-align: center;width: 30%;"> Full Name</th>
+                  <th style="text-align: center;"> Activity Type </th>
+                  <th style="text-align: center;"> Tanggal </th>
+                  <th style="text-align: center;"> Comment </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {% for cl in boards %}
+                <tr>
+                  <td> {{cl["fullname"] }} </td>
+                  <td> {{cl["type"] }} </td>
+                  <td> {{cl["tanggal"] }} </td>
+                  <td> {{cl["comment"] }} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+
+<script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+
+<script type="text/JavaScript">
+    $('#example').DataTable({
+    "pageLength": 100,
+    "order": [[ 2, "desc" ]],
+    "language": {
+        "paginate": {
+            "previous": "Prev",
+            "last": "Next",
+        }
+    }
+
+    } );
+</script>
+<script>
+  $('#confirm-approve').on('show.bs.modal', function (e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+  });
+</script>
+
+<script>
+  function setInputDate(_id) {
+    var _dat = document.querySelector(_id);
+    var hoy = new Date(),
+      d = hoy.getDate(),
+      m = hoy.getMonth() + 1,
+      y = hoy.getFullYear(),
+      data;
+
+    if (d < 10) {
+      d = "0" + d;
+    };
+    if (m < 10) {
+      m = "0" + m;
+    };
+
+    data = y + "-" + m + "-" + d;
+    console.log(data);
+    _dat.value = data;
+  };
+
+  setInputDate("#dateDefault");
+</script>
+{% endblock javascripts %}
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

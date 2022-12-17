@@ -1,0 +1,220 @@
+{% extends "base_site.html" %}
+
+{% block title %} Board Detail {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+
+<link href="{{ url_for('static', filename='assets/css/bulma.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+<!-- Icons -->
+<link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}"
+    rel="stylesheet">
+<!-- CSS Files -->
+<link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container" style="padding-top: 10px;padding-bottom: 10px;">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-content bg-transparent">
+                    <h3 class="mb-0"> {{ boardname }} Members</h3>
+                    
+                </div>
+                <div class="card-content" style="padding-top: 0px;">
+                    <div class="card-body">
+                        <h3 class="subtitle is-6"> Mandays Tahun Berjalan </h3>
+                        <div class="table-responsive">
+                            <table id="example" class="display table table-striped table-bordered table-sm"
+                                style="width: 60%;line-height: 1rem">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;width: 30%;"> Full Name </th>
+                                        <th style="text-align: center;width: 20%;"> Posisi </th>
+                                        <th style="text-align: center;"> Mandays </th>
+                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cl in members %}
+                                    <tr>
+                                        <td> {{cl["fullname"] }} </td>
+                                        <td align="right"> {{cl["posisi"]}} </td>
+                                        <td align="right"> {{cl["mandays"] }} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIALOOOOG -->
+
+                <!-- <div class="container">
+                    <div class="modal" id="modal">
+                        <div class="modal-background"></div>
+                        <div class="modal-card">
+                            <header class="modal-card-head">
+                                <p class="modal-card-title">Update Jumlah Mandays</p>
+
+                            </header>
+                            <section class="modal-card-body">
+                                <form>
+                                    <input class="input" type="text" placeholder="Jumlah Mandays" name="mandaysUpdate"
+                                        id="mandaysUpdate"></input>
+                                </form>
+                            </section>
+                            <footer class="modal-card-foot">
+                                <button class="button is-success is-small" id="modal-update"> Setting </button>
+                                <button class="button is-danger is-small" id="modal-close"> Cancel
+                                </button>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <button class="button is-danger modal-button is-small" data-target="#modal"> Target Mandays
+                    </button>
+                </div> -->
+
+
+
+                <!-- CLOSE DIALOG -->
+
+
+                <div class="card-content pt-1">
+                    <form class="forms-sample" method="POST" id="downloadreport" role="form">
+                        <div class="card-content bg-transparent">
+                        <h3 class="subtitle is-6 pt-1"> Aktifitas 10 hari terakhir</h3>
+                        </div>
+                    </form>
+                    <div class="card-body pt-1">
+                        <div class="table-responsive">
+                            <table id="example2" class="display table table-striped table-bordered table-sm "
+                                style="width: 100%;line-height: 1rem;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;width: 30%;"> Full Name </th>
+                                        <th style="text-align: center;"> Activity Type </th>
+                                        <th style="text-align: center;"> Tanggal </th>
+                                        <th style="text-align: center;"> Comment </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cl in boards %}
+                                    <tr>
+                                        <td> {{cl["fullname"] }} </td>
+                                        <td> {{cl["type"] }} </td>
+                                        <td> {{cl["tanggal"] }} </td>
+                                        <td style="word-wrap: break-all"> {{cl["comment"] }} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+
+<script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+
+<script type="text/JavaScript">
+    $('#example2').DataTable({
+     
+    "pageLength": 20,
+    "order": [[ 2, "desc" ]],
+    "language": {
+        "paginate": {
+            "previous": "Prev",
+            "last": "Next",
+        }
+    }
+
+    } );
+</script>
+<script>
+    $('#confirm-approve').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+    });
+</script>
+
+<script>
+    function setInputDate(_id) {
+        var _dat = document.querySelector(_id);
+        var hoy = new Date(),
+            d = hoy.getDate(),
+            m = hoy.getMonth() + 1,
+            y = hoy.getFullYear(),
+            data;
+
+        if (d < 10) {
+            d = "0" + d;
+        };
+        if (m < 10) {
+            m = "0" + m;
+        };
+
+        data = y + "-" + m + "-" + d;
+        console.log(data);
+        _dat.value = data;
+    };
+
+    setInputDate("#dateDefault");
+</script>
+
+<script>
+    $(".modal-button").click(function () {
+        var target = $(this).data("target");
+        $("html").addClass("is-clipped");
+        $(target).addClass("is-active");
+    });
+
+    // $(".modal-close").click(function () {
+    //     $("html").removeClass("is-clipped");
+    //     $(this).parent().removeClass("is-active");
+    // });
+    $("#modal-close").click(function () {
+        $(".modal").removeClass("is-active");
+
+    });
+
+    $("#modal-update").click(function () {
+        var mU = document.getElementById("mandaysUpdate").value;
+        console.log('KESINI');
+        console.log(mU);
+        console.log("{{ boardname }}");
+    });
+</script>
+{% endblock javascripts %}
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

@@ -1,0 +1,302 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+{% endblock stylesheets %}
+
+{% block content %}
+
+      
+    <!-- Header -->
+    <div class="header pb-2 pt-2 pt-lg-2 d-flex align-items-center" style="min-height: 150px; background-image: url(/static/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    
+    </div>
+      
+    <!-- Page content -->
+    <div class="container-fluid mt--7">
+
+        <div class="row">
+            
+            </div>
+            <div class="col-xl-12 order-xl-1">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                    <h3 class="mb-0">Project Information</h3>
+                    </div>
+                    <div class="col-4 text-right">
+                    <a href="#!" class="btn btn-sm btn-primary">Update</a>
+                    </div>
+                </div>
+                </div>
+                <div class="card-body">
+                {% for cl in project %}
+                    <h6 class="heading-small text-muted mb-4">{{ cl["project"] }}</h6>
+                    <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-username">Client</label>
+                            <input type="text" id="client" class="form-control form-control-sm" disabled="disabled" name="id_project" value="{{ cl["client"] }}">
+                        </div>
+                        </div>
+                        <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-email">PO Name</label>
+                            <input type="text" id="po_name" class="form-control form-control-sm" disabled="disabled" value="{{ cl["po_name"] }}">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-first-name">CR Name</label>
+                                <input type="text" id="cr_name" class="form-control form-control-sm" disabled="disabled" value="{{ cl["cr_name"] }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-last-name">Jenis Project</label>
+                            <input type="text" id="jenis" class="form-control form-control-sm" disabled="disabled" value="{{ cl["jenis"] }}">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                    <p class="mb-0">Tanggal Dimulai : {{ cl['mulaix'] }}</p>
+                                    <p class="mb-0">Target Selesai : {{ cl['selesaix'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="forms-sample" method="POST" id="updtgl" role="form">
+                        <input type="hidden" id="id_project" name="id_project" value="{{ project[0].id_project }}"></input>
+                        <input type="hidden" id="project" name="project" value="{{ project[0].project }}"></input>
+                        <input type="hidden" id="client" name="client" value="{{ project[0].client }}"></input>
+                        <input type="hidden" id="po_name" name="po_name" value="{{ project[0].po_name }}"></input>
+                        <input type="hidden" id="cr_name" name="cr_name" value="{{ project[0].cr_name }}"></input>
+                        <input type="hidden" id="jenis" name="jenis" value="{{ project[0].jenis }}"></input>
+                        <input type="hidden" id="mulai" name="mulai" value="{{ project[0].mulai }}"></input>
+                        <input type="hidden" id="selesai" name="selesai" value="{{ project[0].selesai }}"></input>
+                        <div class="row">
+                          <div class="col-lg-4">
+                            <div class="form-group row">
+                                <input required type="date"  class="form-control col-sm-5 form-control-sm" name="upds" id="upds">
+                                &nbsp;
+                                <button type="submit" name='updateselesai' id="updateselesai" class="btn btn-warning btn-sm mb-3">Update Tanggal Selesai</button>
+                            </div>
+                          </div>
+                        </div>
+                    </form>
+                    {% endfor %}
+                    </div>
+                    <hr class="my-4" />
+                    <!-- Address -->
+                    <h6 class="heading-small text-muted mb-4">Resources information</h6>
+                    <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">Project Manager</label>
+                            {% for cl in pm %}
+                                <input id="pm" class="form-control form-control-sm"  value="{{ cl["pm"] }}" type="text" disabled="disabled">
+                            {% endfor %}
+                        </div>
+                        </div>
+                    </div>
+                   
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">System Analyst</label>
+                            {% for cl in sa %}
+                                <input id="sa" class="form-control form-control-sm"  value="{{ cl["sa"] }}" type="text" disabled="disabled">
+                            {% endfor %}
+                        </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">Project Admin</label>
+                            {% for cl in pa %}
+                                <input id="pa" name="pa" class="form-control form-control-sm"  value="{{ cl["pa"] }}" type="text" disabled="disabled">
+                            {% endfor %}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address" id="changeMe">Developer</label>
+                        </div>
+                        </div>
+                    </div>
+
+                    <form class="forms-sample" method="POST" id="deletedev" role="form">
+                    <input type="hidden" id="id_project" name="id_project" value="{{ project[0].id_project }}"></input>
+                    <input type="hidden" id="project" name="project" value="{{ project[0].project }}"></input>
+                     <input type="hidden" id="client" name="client" value="{{ project[0].client }}"></input>
+                     <input type="hidden" id="po_name" name="po_name" value="{{ project[0].po_name }}"></input>
+                     <input type="hidden" id="cr_name" name="cr_name" value="{{ project[0].cr_name }}"></input>
+                     <input type="hidden" id="jenis" name="jenis" value="{{ project[0].jenis }}"></input>
+                     <input type="hidden" id="mulai" name="mulai" value="{{ project[0].mulai }}"></input>
+                     <input type="hidden" id="selesai" name="selesai" value="{{ project[0].selesai }}"></input>
+                    {% for cl in dev %}
+
+                    <form class="forms-sample" method="POST" id="deleteres" role="form">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <input type="text" class="form-control form-control-sm -sm col-sm-5 mx-sm-3 mb-2" name="deldev" id="deldev" required value="{{ cl["developer"] }}">
+                                <button type="submit" name='deleteresource' id="deleteresource" value="{{ cl["developer"] }}" class="btn btn-warning btn-sm mb-2">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">Quality Control</label>
+                           
+                        </div>
+                        </div>
+                    </div>
+                    {% for cl in qc %}
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <input type="text" class="form-control form-control-sm -sm col-sm-5 mx-sm-3 mb-2" name="delqc" id="delqc" required value="{{ cl["qc"] }}">
+                                <button type="submit" name='deleteresource' id="deleteresource" value="{{ cl["qc"] }}" class="btn btn-warning btn-sm mb-2">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">Technical Writer</label>
+                           
+                        </div>
+                        </div>
+                    </div>
+                    {% for cl in tw %}
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <input type="text" class="form-control form-control-sm -sm col-sm-5 mx-sm-3 mb-2" name="deltw" id="deltw" required value="{{ cl["tw"] }}">
+                                <button type="submit" name='deleteresource' id="deleteresource" value="{{ cl["tw"] }}" class="btn btn-warning btn-sm mb-2">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </form>
+                <form class="forms-sample" method="POST" id="updatedetail" role="form">
+
+                    <div class="form-group row">
+                        <label for="exampleInputName1" class="col-sm-3 col-form-label form-control-sm font-weight-bold" style="color: #00cc99;">Tambah Resource </label>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label for="exampleInputEmail3" class="col-sm-3 col-form-label form-control-sm font-weight-light">System Analyst</label>
+                        <select id="sa" name="sa" class="selectpicker form-control col-sm-3" data-live-search="true" data-style="btn-success" title="List SA..." >
+                            <option hidden >List System Analyst</option>
+                            {% for psa in sas %}
+                                <option value="{{psa["fullname"] }}">{{psa["fullname"] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                   
+                    <div class="form-group row">
+                        <label for="exampleInputEmail3" class="col-sm-3 col-form-label form-control-sm font-weight-light">Developer</label>
+                        <select name="dev" class="selectpicker form-control col-sm-3" data-live-search="true" data-style="btn-success" title="List Developer...">
+                            {% for pdev in devs %}
+                                <option value="{{pdev["fullname"] }}">{{pdev["fullname"] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail3" class="col-sm-3 col-form-label form-control-sm font-weight-light">Quality Control</label>
+                            <select name="qc" class="selectpicker form-control col-sm-3" data-live-search="true"  data-style="btn-success" title="List QC...">
+                            {% for q in qcs %}
+                                <option value="{{q["fullname"] }}">{{q["fullname"] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail3" class="col-sm-3 col-form-label form-control-sm font-weight-light">Technical Writer</label>
+                            <select name="tw" class="selectpicker form-control col-sm-3" data-live-search="true" data-style="btn-success" title="List TW...">
+                            {% for t in tws %}
+                                <option value="{{t["fullname"] }}">{{t["fullname"] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <button type="submit" name='register' id="register" class="btn btn-success btn-sm" > Tambah Resource </button>
+                        </div>
+                    </div>
+
+                     <!-- <small id="emailHelp" class="form-text text-muted">{{ project }}</small> -->
+                     <input type="hidden" id="id_project" name="id_project" value="{{ project[0].id_project }}"></input>
+                     <input type="hidden" id="project" name="project" value="{{ project[0].project }}"></input>
+                     <input type="hidden" id="client" name="client" value="{{ project[0].client }}"></input>
+                     <input type="hidden" id="po_name" name="po_name" value="{{ project[0].po_name }}"></input>
+                     <input type="hidden" id="cr_name" name="cr_name" value="{{ project[0].cr_name }}"></input>
+                     <input type="hidden" id="jenis" name="jenis" value="{{ project[0].jenis }}"></input>
+                     <input type="hidden" id="mulai" name="mulai" value="{{ project[0].mulai }}"></input>
+                     <input type="hidden" id="selesai" name="selesai" value="{{ project[0].selesai }}"></input>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    
+        {% include "site_template/footer.html" %}
+        
+    </div>    
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ super()}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script>
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
+    </script>
+    <script>
+        $(function(){
+            $('#addresource').click(function(e){
+                $("#changeMe").text("your tip has been submitted!");
+            /* e.preventDefault();
+            $('#buttin').text($('#myForm').serialize());
+            */
+            /*
+            $.post('http://path/to/post', 
+                $('#myForm').serialize(), 
+                function(data, status, xhr){
+                // do something here with response;
+                });
+            */
+            });
+        });
+    </script>
+{% endblock javascripts %}

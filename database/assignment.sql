@@ -1,0 +1,19 @@
+CREATE TABLE `assignment` (
+  `id_assignment` varchar(100) NOT NULL,
+  `approval` varchar(10) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
+  `tanggal` varchar(10) NOT NULL,
+  `starttime` varchar(5) NOT NULL,
+  `endtime` varchar(5) NOT NULL,
+  `detail` varchar(100) NOT NULL,
+  `reff` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  `applicationname` varchar(50) NOT NULL,
+  `assignmenttype` varchar(100) NOT NULL,
+  `dateassignment` varchar(10) NOT NULL,
+  `supervisor` varchar(100) NOT NULL,
+  `site` varchar(20) NOT NULL,
+  `onsite` varchar(10) NOT NULL,
+  `timenow` varchar(19) NOT NULL,
+  PRIMARY KEY (`id_assignment`,`user_id`,`tanggal`,`detail`,`reff`,`status`,`applicationname`,`assignmenttype`,`dateassignment`,`site`,`onsite`,`timenow`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4

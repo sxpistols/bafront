@@ -1,0 +1,157 @@
+{% extends "base_site.html" %}
+
+{% block title %} Karyawan {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+  
+    <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+    
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
+        
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">Daftar Project</h3>
+                    </div>
+                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Anda Berencana Untuk Menonaktifkan Project ini,</p>
+                                    <p>Apakah ingin melanjutkan?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-success btn-ok">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display table" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;width: 20%;%"> Nama Project</th>
+                                        <th style="text-align: center;"> Client </th>
+                                        
+                                        <th style="text-align: center;"> Target Selesai </th>
+                                        <th style="text-align: center;"> Close Project </th>
+                                        
+                                        <!-- <th> Site </th> -->
+                                        <!-- <th> Supervisor </th> -->
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cl in proj %}
+                                    <tr>
+                                        <td> <a href="/project_detail/{{ cl['id_project'] }}">{{cl["project"] }}</a> </td>
+                                        <td> {{cl["client"] }} </td>
+                                       
+                                        <td> {{cl["selesai"] }} </td>
+                                        <td style="text-align: center;">  
+                                            <button class="btn btn-success btn-sm" value="{{ cl['id_project'] }}" name="id_project" data-record-id="{{ cl['id_project'] }}"  data-toggle="modal" data-target="#confirm-delete">
+                                                Close
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+       
+
+{% endblock content %}
+
+ {% block javascripts %}
+
+ 
+
+<script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    
+    <!-- Argon JS -->
+    <script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+
+<script type = "text/JavaScript">
+    $('#example').DataTable({
+    "pageLength": 10,
+    "language": {
+        "paginate": {
+            "previous": "Prev",
+            "last": "Next",
+        }
+    }
+
+    } );
+</script>
+<script>
+        $('#confirm-approve').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            
+            $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+        });
+    </script>
+
+    <script>
+        $('#confirm-delete').on('click', '.btn-ok', function(e) {
+            var $modalDiv = $(e.delegateTarget);
+            var id = $(this).data('recordId');
+            $.post('/pmoproject', { id_project: id} ).then()
+             $modalDiv.addClass('loading');
+                setTimeout(function() {
+                    $modalDiv.modal('hide').removeClass('loading');
+                }, 1000)
+             document.location.reload();
+        });
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            var data = $(e.relatedTarget).data();
+            $('.title', this).text(data.recordTitle);
+            $('.btn-ok', this).data('recordId', data.recordId);
+        });
+    </script>
+
+  {% endblock javascripts %}
+
+
+
+
+
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

@@ -1,0 +1,103 @@
+{% extends "base_site.html" %}
+
+{% block title %} Karyawan {% endblock title %}
+
+
+{% block stylesheets %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
+  
+  
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="row">
+    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">List Assignment</h3>
+                    </div>
+                    <div class="card-body">
+                     <div class="table-responsive">
+                        <table id="example" class="display table" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th  style="text-align: center;"> Name </th>
+                                <th  style="text-align: center;"> Start Time </th>
+                                <th  style="text-align: center;"> End Time </th>
+                                <th  style="text-align: center;"> Onsite </th>
+                                <th  style="text-align: center;"> Site </th>
+                                <th  style="text-align: center;"> Detail </th>
+                                <th  style="text-align: center;"> Refference </th>
+                                <th  style="text-align: center;"> Status Task </th>
+                                
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for assignment in karyawan %}
+                            <tr>
+                                <td> {{assignment["fullname"]}} </td>
+                                <td> {{assignment["starttime"]}} </td>
+                                <td> {{assignment["endtime"]}} </td>
+                                <td> {{assignment["onsite"]}} </td>
+                                <td> {{assignment["site"]}} </td>
+                                <td> {{assignment["detail"]}} </td>
+                                <td> {{assignment["reff"]}} </td>
+                                <td> {{assignment["status"]}} </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                     </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+   
+    
+
+
+            <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+            <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+            <script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+          <script type = "text/JavaScript">
+              $(document).ready(function() {
+              $('#example').DataTable({
+                  "pageLength": 25,
+                  "language": {
+                        "paginate": {
+                        "previous": "Prev",
+                        "last": "Next"
+                        }
+                    }
+                
+              })
+          } );
+      </script>
+                
+
+
+          
+        {% include "site_template/footer.html" %}
+        </div>
+    </div>        
+
+{% endblock content %}
+
+
+
+ {% block javascripts %}
+    <!-- Core -->
+
+
+
+  {% endblock javascripts %}
+
+
+
+{% block extra_javascripts %}
+{% endblock %}

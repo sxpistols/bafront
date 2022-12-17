@@ -1,0 +1,141 @@
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+  <div class="container-fluid">
+    <a class="navbar-brand pt-0" href="/" style="padding-bottom: 10px;">
+      <img src="/static/assets/img/brand/renameBrand.png" class="navbar-brand-img" alt="Flask Argon Dashboard">
+    </a>
+    <ul class="nav align-items-center d-md-none">
+      <li class="nav-item dropdown">
+        <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <div class="media align-items-center">
+            <span class="avatar avatar-sm rounded-circle">
+              <img alt="Image placeholder" src="/static/assets/img/theme/hacker.png">
+            </span>
+          </div>
+        </a>
+        <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+          <div class=" dropdown-header noti-title">
+            <h6 class="text-overflow m-0">{{ current_user.email }}</h6>
+          </div>
+          <a href="/profile" class="dropdown-item">
+            <i class="ni ni-single-02"></i>
+            <span>My profile</span>
+          </a>
+          <a href="/profile.html" class="dropdown-item">
+            <i class="ni ni-settings-gear-65"></i>
+            <span>Settings</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="/logout" class="dropdown-item">
+            <i class="ni ni-user-run text-red"></i>
+            <span>Logout</span>]
+          </a>
+        </div>
+      </li>
+    </ul>
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+      <!-- Collapse header -->
+      <div class="navbar-collapse-header d-md-none">
+        <div class="row">
+          <div class="col-6 collapse-brand">
+            <a href="/">
+              <img src="/static/assets/img/brand/bluex.png">
+            </a>
+          </div>
+          <div class="col-6 collapse-close">
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main"
+              aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
+              <span></span>
+              <span></span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+
+      <!-- Navigation -->
+      <ul class="navbar-nav">
+        {% if current_user.role == 8 %}
+        <li class="nav-item">
+          <a class="nav-link" href="/adddevice">
+            <i class="fa fa-users text" style="color: #eb266e"></i> Tambah Device
+          </a>
+        </li>
+        {% endif %}
+        {% if current_user.role == 10 %}
+        <li class="nav-item">
+          <a class="nav-link" href="/addBoard">
+            <i class="fa fa-users text" style="color: #eb266e"></i> Create Board
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/addBoardMember">
+            <i class="fa fa-users text" style="color: #eb266e"></i> Add Member To Board
+          </a>
+        </li>
+        {% endif %}
+
+
+        {% if current_user.role == 1 or current_user.role == 4 or current_user.role == 2 or current_user.role == 6 %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="/karyawan">
+            <i class="fa fa-users  text" style="color: #eb266e"></i> Daftar Karyawan
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/addemp">
+            <i class="fa fa-user  text" style="color: #eb266e"></i> Tambah Karyawan
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/daftarkaryawancuti">
+            <i class="fa fa-list  text" style="color: #eb266e"></i> Daftar Cuti
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/karyawancuti">
+            <i class="fa fa-plus  text" style="color: #eb266e"></i> Tambah Cuti
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/daftarproject">
+            <i class="fa fa-book  text" style="color: #eb266e"></i> Daftar Proyek
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/dailyactivitybyselected">
+            <i class="fa fa-folder  text" style="color: #eb266e"></i> Activity By Date
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/resourceidle">
+            <i class="fa fa-save  text" style="color: #eb266e"></i> Karyawan Idle
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/timesheet">
+            <i class="fa fa-pen  text" style="color: #eb266e"></i> Timesheet
+          </a>
+        </li>
+        
+        
+        {% endif %}
+
+        {% if current_user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href={{ url_for('base_blueprint.logout') }}>
+            <i class="ni ni-user-run" style="color: #eb266e"></i> Logout
+          </a>
+        </li>
+        {% endif %}
+
+      </ul>
+      <!-- Divider -->
+      <hr class="my-3">
+      <!-- Heading -->
+
+    </div>
+  </div>
+</nav>

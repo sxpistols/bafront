@@ -1,0 +1,197 @@
+{% extends "base_site.html" %}
+{% block title %} Profile {% endblock title %}
+{% block stylesheets %}
+{{ super() }}
+{% endblock stylesheets %}
+{% block content %}
+<div class="row">
+    <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+            <div class="card-body">
+                {% for emp in karyawan %}
+                <form class="forms-sample" method="POST" id="updatekaryawan" role="form">
+                    <h4 class="heading mb-4">{{ emp.fullname }} - {{ emp.status }} </h4>
+                    <p>Lama Bekerja : {{ emp.year }} tahun, {{ emp.month }} bulan, {{ emp.day}} hari </p>
+                    <h6 class="heading-small text-muted mb-2">User information</h6>
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">User ID</label>
+                                    <input type="text" id="input-username" name="username"
+                                        class="form-control form-control-alternative" placeholder="Username"
+                                        value="{{ emp.user_id }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-first-name">Full Name</label>
+                                    <input type="text" id="input-first-name" name="fullname"
+                                        class="form-control form-control-alternative" placeholder="First name"
+                                        value="{{ emp.fullname }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-email">Email address</label>
+                                    <input type="email" id="input-email" name="email"
+                                        class="form-control form-control-alternative" placeholder="Email"
+                                        value="{{ emp.email }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-resource">Resource</label>
+                                    <input type="text" id="input-resource" name="resource"
+                                        class="form-control form-control-alternative" placeholder="Resource"
+                                        value="{{ emp.resource }}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-first-name"> NIK Karyawan </label>
+                                    <input type="text" name="nikkaryawan" class="form-control form-control-alternative"
+                                        placeholder="First name" value="{{ emp.nikkaryawan }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-first-name"> Posisi </label>
+                                    <input type="text" id="input-first-name" name="posisi"
+                                        class="form-control form-control-alternative" placeholder="First name"
+                                        value="{{ emp.posisi }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-first-name">Divisi </label>
+                                    <input type="text" id="divisi" name="divisi"
+                                        class="form-control form-control-alternative" value="{{ emp.divisi }}">
+
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name">Telegram ID</label>
+                                    <input type="text" id="input-last-name" name="telegram"
+                                        class="form-control form-control-alternative" placeholder="Last name"
+                                        value="{{ emp.telegram }}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name">Trello username</label>
+                                    <input type="text" id="trello" name="trelloid"
+                                        class="form-control form-control-alternative" placeholder="Last name"
+                                        value="{{ emp.trelloid }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name">Pendidikan</label>
+                                    <input type="text" id="pendidikan" name="pendidikan"
+                                        class="form-control form-control-alternative" value="{{ emp.pendidikan }}">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name"> Institusi </label>
+                                    <input type="text" name="institusi" class="form-control form-control-alternative"
+                                        value="{{ emp.institusi }}">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name"> Jurusan </label>
+                                    <input type="text" name="jurusan" class="form-control form-control-alternative"
+                                        value="{{ emp.jurusan }}">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+                    <h6 class="heading-small text-muted mb-4">Contact information</h6>
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-address">Alamat</label>
+                                    <input id="input-address" name="alamat"
+                                        class="form-control form-control-alternative" value="{{ emp.alamat }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-city">Nomor Telepon</label>
+                                    <input type="text" name="telepon" id="input-city"
+                                        class="form-control form-control-alternative" value="{{ emp.phone }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-country">Tanggal Masuk</label>
+                                    <input type="text" name="tanggalmasuk" id="input-country"
+                                        class="form-control form-control-alternative" value="{{ emp.tanggalmasuk }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-country">Status Karyawan</label>
+                                    <input type="text" id="statuskaryawan" name="statuskaryawan"
+                                        class="form-control form-control-alternative" value="{{ emp.statuskaryawan }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Identitas Digunakan</label>
+                                    <input type="text" id="identitas" name="identitas"
+                                        class="form-control form-control-alternative" value="{{ emp.identitas }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">Status Pernikahan </label>
+                                    <input type="text" name="statuspernikahan"
+                                        class="form-control form-control-alternative"
+                                        value="{{ emp.statuspernikahan }}">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <button type="submit" name='update' id="update" class="btn btn-success btn-sm"> Update
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% include "site_template/footer.html" %}
+
+    </div>
+
+    {% endblock content %}
+
+    {% block javascripts %}
+    {{ super()}}
+    {% endblock javascripts %}

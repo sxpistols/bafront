@@ -1,0 +1,254 @@
+{% extends "base_site.html" %}
+
+{% block title %} Karyawan {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+
+<link href="{{ url_for('static', filename='assets/css/bulma.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+<!-- Icons -->
+<link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}"
+    rel="stylesheet">
+<!-- CSS Files -->
+<link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-content bg-transparent">
+                        <h3 class="mb-0">Timesheet Karyawan periode {{ bulanB }} {{ tahunB }}</h3>
+                    </div>
+                    <form class="forms-sample" method="POST" id="downloadreport" role="form">
+                        <div class="card-header bg-transparent">
+                            <input type="month" class="form-control col-sm-2 form-control-sm" name="bulan" id="bulan"
+                                data-date="" value="" required>
+                            <br>
+                            <div class="pl-3">
+                                <button type="submit" name='download' id="download" class="btn btn-primary btn-sm"> Show
+                                </button>
+                                <button type="submit" name='idownload' id="idownload" class="btn btn-success btn-sm">
+                                    Download </button>
+                                
+                            </div>
+                            <!-- <a href="/download" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"> Download </a> -->
+                            <!-- <a href="/downloadl" class="btn btn-success btn-sm active" role="button" aria-pressed="true"> Last Month </a> -->
+
+                        </div>
+                        <!-- <div class="card-header bg-transparent">
+                            <input type="month" class="form-control col-sm-3 form-control-sm" name="tanggallahir" id="tanggallahir" data-date=""  required>
+                        </div> -->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="example" class="display table table-striped table-bordered   "
+                                    style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;width: 1%;"> No </th>
+                                            <th style="text-align: center;"> Nama Karyawan </th>
+                                            <th style="text-align: center;"> 01 </th>
+                                            <th style="text-align: center;"> 02 </th>
+                                            <th style="text-align: center;"> 03 </th>
+                                            <th style="text-align: center;"> 04 </th>
+                                            <th style="text-align: center;"> 05 </th>
+                                            <th style="text-align: center;"> 06 </th>
+                                            <th style="text-align: center;"> 07 </th>
+                                            <th style="text-align: center;"> 08 </th>
+                                            <th style="text-align: center;"> 09 </th>
+                                            <th style="text-align: center;"> 10 </th>
+                                            <th style="text-align: center;"> 11 </th>
+                                            <th style="text-align: center;"> 12 </th>
+                                            <th style="text-align: center;"> 13 </th>
+                                            <th style="text-align: center;"> 14 </th>
+                                            <th style="text-align: center;"> 15 </th>
+                                            <th style="text-align: center;"> 16 </th>
+                                            <th style="text-align: center;"> 17 </th>
+                                            <th style="text-align: center;"> 18 </th>
+                                            <th style="text-align: center;"> 19 </th>
+                                            <th style="text-align: center;"> 20 </th>
+                                            <th style="text-align: center;"> 21 </th>
+                                            <th style="text-align: center;"> 22 </th>
+                                            <th style="text-align: center;"> 23 </th>
+                                            <th style="text-align: center;"> 24 </th>
+                                            <th style="text-align: center;"> 25 </th>
+                                            <th style="text-align: center;"> 26 </th>
+                                            <th style="text-align: center;"> 27 </th>
+                                            <th style="text-align: center;"> 28 </th>
+                                            <th style="text-align: center;"> 29 </th>
+                                            <th style="text-align: center;"> 30 </th>
+                                            <th style="text-align: center;"> 31 </th>
+                                            <!-- <th> Site </th> -->
+                                            <!-- <th> Supervisor </th> -->
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% set count = namespace(value=1) %}
+                                        {% for assignment in proj %}
+                                        <tr>
+                                            <td style="text-align: right">{{ count.value }} </td>
+                                            {% set count.value = count.value + 1 %}
+                                            <td> {{assignment["fullname"]}} </td>
+                                            <td align="right"> {{assignment["tanggal_01"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_02"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_03"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_04"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_05"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_06"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_07"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_08"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_09"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_10"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_11"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_12"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_13"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_14"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_15"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_16"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_17"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_18"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_19"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_20"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_21"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_22"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_23"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_24"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_25"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_26"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_27"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_28"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_29"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_30"] | int() | default("-",True)}}
+                                            </td>
+                                            <td align="right"> {{assignment["tanggal_31"] | int() | default("-",True)}}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+{% block javascripts %}
+
+
+
+<script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+<!-- Argon JS -->
+<script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+
+<script type="text/JavaScript">
+    $(document).ready(function() {
+        var t = $('#example').DataTable( {
+            "pageLength": 100,
+            "language": {
+                "paginate": {
+                    "previous": "Prev",
+                    "last": "Next",
+                },
+            },
+            "columnDefs": [ {
+                "searchable": false,
+                "orderable": false,
+                "targets": 0
+            } ],
+            "order": [[ 1, 'asc' ]]
+        } );
+     
+        t.on( 'order.dt search.dt', function () {
+            t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();
+    } );
+
+    var date = new Date();
+
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getFullYear();
+
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+
+    var today = year + "-" + month;
+
+
+    document.getElementById('bulan').value = today;
+
+</script>
+<script type="text/Javascript">
+
+</script>
+
+{% endblock javascripts %}
+
+
+
+
+
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

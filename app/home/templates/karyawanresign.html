@@ -1,0 +1,138 @@
+{% extends "base_site.html" %}
+
+{% block title %} Karyawan {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+
+<link href="{{ url_for('static', filename='assets/css/bulma.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+<!-- Icons -->
+<link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}"
+    rel="stylesheet">
+<!-- CSS Files -->
+<link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+
+{% endblock stylesheets %}
+
+{% block content %}
+<div class="row">
+    <div class="container-fluid" style="padding-top: 10px;">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        {% if current_user.role == 2 %}
+                        <h3 class="mb-0">Daftar Karyawan Resign PMO</h3>
+                        {% elif current_user.role == 6 %}
+                        <h3 class="mb-0">Daftar Karyawan Resign SDO</h3>
+                        {% else %}
+                        <h3 class="mb-0">Daftar Karyawan</h3>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display table table-striped table-bordered table-sm wrap" style="width: 100%;line-height: 1rem">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;"> No </th>
+                                        <th style="text-align: center;"> Nama Karyawan </th>
+                                        <!-- <th style="text-align: center;"> NIK Karyawan</th> -->
+                                        <!-- <th style="text-align: center;"> Lama Bekerja</th> -->
+                                        <!-- <th style="text-align: center;"> Terakhir Update </th> -->
+                                        <th style="text-align: center;"> Posisi </th>
+                                        <th style="text-align: center;"> Join Date </th>
+                                        <th style="text-align: center;"> Resign Date </th>
+                                        <th style="text-align: center;"> Lama Bekerja</th>
+                                        <th style="text-align: center;"> Site </th>
+                                        <th style="text-align: center;"> Handover </th>
+                                        <th style="text-align: center;"> Project </th>
+                                        <th style="text-align: center;"> Tanggal Handover </th>
+                                        <!-- <th> Site </th> -->
+                                        <!-- <th> Supervisor </th> -->
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% set count = namespace(value=1) %}
+                                    {% for kk in karyawan %}
+                                    <tr>
+                                        <td align="right"> {{ count.value }} </td>
+                                        {% set count.value = count.value + 1 %}
+                                        <td> <a
+                                                href="/user_detail/{{ kk['user_id'] }}">{{kk["fullname"]}}</a>
+                                        </td>
+                                        
+                                        <td align="center"> {{kk["posisi"]}} </td>
+                                        <td> {{kk["tanggalmasuk"]}} </td>
+                                        <td> {{kk["resigndate"]}} </td>
+                                        <td align="right"> {{kk["year"]}} Tahun {{kk["month"]}} Bulan {{kk["day"]}} Hari</td>
+                                        <td> {{kk["site"]}} </td>
+                                        <td> {{kk["handover"]}} </td>
+                                        <td> {{kk["project"]}} </td>
+                                        <td> {{kk["tanggalhandover"]}} </td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock content %}
+
+{% block javascripts %}
+
+
+
+<script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+<!-- Argon JS -->
+<script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+
+<script type="text/JavaScript">
+    $('#example').DataTable({
+    "pageLength": 25,
+    "language": {
+        "paginate": {
+            "previous": "Prev",
+            "last": "Next",
+        }
+    }
+
+    } );
+</script>
+
+{% endblock javascripts %}
+
+
+
+
+
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

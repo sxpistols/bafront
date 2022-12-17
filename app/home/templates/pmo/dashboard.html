@@ -1,0 +1,39 @@
+{% extends "base_site.html" %}
+
+{% block title %} Dashboard PMO {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+<!-- <link href="{{ url_for('static', filename='assets/css/bulma.min.css') }}" rel="stylesheet"> -->
+{% endblock stylesheets %}
+
+{% block content %}
+
+{% include "site_template/navigation.html" %}
+
+{% include "site_template/status_dashboard.html" %}
+
+{% include "site_template/pmoperposisi.html" %}
+{% include "site_template/dashboard_chart.html" %}
+{% include "site_template/posisichart.html" %}
+{% include "site_template/sdodipmo.html" %}
+{% include "site_template/pmoforsdo.html" %}
+<div class="container mt-7">
+  
+
+  {% include "site_template/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+{{ super()}}
+<script>
+  // Global parameters:
+  // do not resize the chart canvas when its container does (keep at 600x400px)
+
+  // define the chart data
+
+</script>
+{% endblock javascripts %}

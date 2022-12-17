@@ -1,0 +1,148 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+
+
+<!-- Header -->
+<!-- Header container -->
+
+
+<!-- Page content -->
+
+<div class="row">
+
+  <div class="col-xl-12 order-xl-1">
+    <div class="card bg-secondary shadow">
+
+      <div class="card-body">
+        {% for emp in proj %}
+
+        <form class="forms-sample" method="POST" id="updateproject" role="form">
+          <input type="hidden" name="board" value="{{ emp.id }}" />
+          <!-- <p>Lama Bekerja : {{ emp.year }} tahun, {{ emp.month }} bulan, {{ emp.day}} hari </p> -->
+          <h6 class="heading-small text-muted mb-2">Assignment information</h6>
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <!-- {{ emp.nama }} -->
+                  <h2 class="subtitle is-6"> Nama Karyawan </h2>
+                  <h2 class="title is-4"> {{ emp.fullname }}</h2>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <!-- {{ emp.nama }} -->
+                  <h2 class="subtitle is-6"> Project Manager </h2>
+                  <h2 class="title is-4"> {{ emp.pm }}</h2>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <!-- {{ emp.nama }} -->
+                  <h2 class="subtitle is-6"> Nama Project </h2>
+                  <h2 class="title is-4"> {{ emp.name }}</h2>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                
+              </div>
+            
+            </div>
+            
+            
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Start Date / yyyy-mm-dd</label>
+                  <input type="text" name="startd" class="form-control form-control-alternative"
+                    placeholder="First name" value="{{ emp.dateassignment }}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> End Date / yyyy-mm-dd </label>
+                  <input type="text" name="endd" class="form-control form-control-alternative" placeholder="First name"
+                    value="{{ emp.endassignment }}">
+                </div>
+              </div>
+              <input type="hidden" id="assignmentid" name="assignmentid" value="{{ emp.assignment_id }}">
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Assignment Type Project/Riset/POC/CSR/Hibah</label>
+                  <input type="text" name="typex" class="form-control form-control-alternative"
+                    placeholder="First name" value="{{ emp.assignmenttype }}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Status ACTIVE/HOLD/DONE </label>
+                  <input type="text" name="status" class="form-control form-control-alternative" placeholder="First name"
+                    value="{{ emp.status }}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Extend Until / yyyy-mm-dd </label>
+                  <input type="text" name="extendd" class="form-control form-control-alternative" placeholder=""
+                    value="{{ emp.extendassignment | default("",true) }}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> CR Name </label>
+                  <input type="text" name="crname" class="form-control form-control-alternative" placeholder=""
+                    value="{{ emp.crname | default("",true) }} ">
+                </div>
+              </div>
+
+            </div>
+
+            
+
+            
+
+
+          </div>
+          <!-- Address -->
+          <div class="pl-lg-4">
+
+            <div class="row">
+              <div class="col-sm-1">
+                <button type="submit" name='update' id="update" class="btn btn-success btn"> Update
+                </button>
+              </div>
+             
+            </div>
+          </div>
+          <!-- Description -->
+
+        </form>
+        {% endfor %}
+        <br><br>
+        {% include "site_template/footer.html" %}
+      </div>
+
+    </div>
+      
+
+
+  </div>
+
+  {% endblock content %}
+
+  {% block javascripts %}
+  {{ super()}}
+  {% endblock javascripts %}

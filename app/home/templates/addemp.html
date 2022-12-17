@@ -1,0 +1,283 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+<link href="{{ url_for('static', filename='assets/css/bulma.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-content bg-transparent">
+                        <h3 class="mb-0">Tambah Karyawan</h3>
+                    </div>
+                    <div class="card-body">
+
+                        <form class="forms-sample" method="POST" id="addkaryawan" role="form">
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-bold"
+                                    style="color: #00cc99;">IDENTITAS</label>
+
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">User ID</label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm form-control-sm"
+                                    name="userid" id="userid" placeholder="arief.dolants" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Nama
+                                    Lengkap</label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm" name="fullname"
+                                    id="fullname" placeholder="Arief Dolants" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Tempat
+                                    Lahir</label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm" name="tempatlahir"
+                                    id="tempatlahir" placeholder="Jakarta" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Tanggal
+                                    Lahir</label>
+                                <!-- <input type="text" class="form-control col-sm-3 form-control-sm" name="tanggalmasuk" id="tanggalmasuk" placeholder="2007-02-27"> -->
+                                <input type="date" class="form-control col-sm-3 form-control-sm" name="tanggallahir"
+                                    id="tanggallahir" data-date="" value="2000-08-17" required>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Alamat
+                                    Email</label>
+                                <input type="email" class="form-control col-sm-3 form-control-sm" name="email"
+                                    id="email" placeholder="Enter a valid email address" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">ID
+                                    Telegram</label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm" name="telegram"
+                                    id="telegram" placeholder="dolants" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Nomor
+                                    Telepon</label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm" name="phone" id="phone"
+                                    placeholder="6281317594879" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputEmail3" class="col-sm-3 col-form-label form-control-sm">Jenis
+                                    Identitas</label>
+                                <select name="identitas"
+                                    class="js-example-basic-single col-sm-3 form-control-sm col-sm-3">
+                                    <option value="KTP">KTP</option>
+                                    <option value="SIM">SIM</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Nomor
+                                    Identitas</label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm col-sm-3" name="nik"
+                                    id="nik" placeholder="3xxxxxxxxxxxxxxxx" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputEmail3"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Status
+                                    Pernikahan</label>
+                                <select name="statuspernikahan"
+                                    class="js-example-basic-single col-sm-3 form-control-sm">
+                                    <option value="Lajang">Lajang</option>
+                                    <option value="Menikah">Menikah</option>
+                                    <option value="Menikah">Janda</option>
+                                    <option value="Menikah">Duda</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Alamat Tinggal
+                                    Sesuai KTP</label>
+                                <textarea class="form-control  col-sm-3" name="alamat" id="alamat" rows="3"
+                                    required></textarea>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-bold"
+                                    style="color: #00cc99;">PENDIDIKAN</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputEmail3"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Pendidikan
+                                    Akhir</label>
+                                <select name="pendidikan" class="js-example-basic-single col-sm-3 form-control-sm">
+                                    <option value="Lajang">SMK/SMU/Sederajat</option>
+                                    <option value="D1">D1</option>
+                                    <option value="D2">D2</option>
+                                    <option value="D3">D3</option>
+                                    <option value="S1">S1</option>
+                                    <option value="S2">S2</option>
+                                    <option value="S3">S3</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Nama
+                                    Institusi</label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm col-sm-3"
+                                    name="institusi" id="institusi" placeholder="Kyoto University" required>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light"> Jurusan </label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm col-sm-3" name="jurusan"
+                                    placeholder="Teknik Nuklir" required>
+                            </div>
+                            <br>
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-bold"
+                                    style="color: #00cc99;">KEPEGAWAIAN</label>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label form-control-sm font-weight-light"> NIK Karyawan
+                                </label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm col-sm-3"
+                                    name="nikkaryawan" placeholder="20841611" required>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="exampleInputEmail3"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Divisi</label>
+                                <select name="divisi" class="js-example-basic-single col-sm-3 form-control-sm">
+                                    <option value="PMO">PMO</option>
+                                    <option value="BSO">BSO</option>
+                                    <option value="SDO">SDO</option>
+                                    <option value="RMO">RMO</option>
+                                    <option value="DSO">DSO</option>
+                                    <option value="KMO">KMO</option>
+                                    <option value="BO">BO</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputEmail3" class="col-sm-3 col-form-label form-control-sm font-weight-light">Resource</label>
+                                <select name="divisi" class="js-example-basic-single col-sm-3 form-control-sm">
+                                    <option value="RMO">RMO</option>
+                                    <option value="PMO">PMO</option>
+                                    <option value="BSO">BSO</option>
+                                    <option value="SDO">SDO</option>
+                                    <option value="RMO">RMO</option>
+                                    <option value="DSO">DSO</option>
+                                    <option value="KMO">KMO</option>
+                                    <option value="BO">BO</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputEmail3"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Posisi</label>
+                                <select name="posisi" class="js-example-basic-single col-sm-3 form-control-sm">
+                                    <option value="Developer">Developer</option>
+                                    <option value="Developer Analyst">Developer Analyst</option>
+                                    <option value="System Analyst">System Analyst</option>
+                                    <option value="Project Manager">Project Manager</option>
+                                    <option value="Project Admin">Project Admin</option>
+                                    <option value="Quality Control">Quality Control</option>
+                                    <option value="Technical Writer">Technical Writer</option>
+                                    <option value="Data Scientist">Data Scientist</option>
+                                    <option value="Support Surveillance">Support Surveillance</option>
+                                    <option value="Support Leader">Support Leader</option>
+                                    <option value="Support Specialist">Support Specialist</option>
+                                    <option value="Subject Matter Expert">Subject Matter Expert</option>
+                                    <option value="UI / UX">UI / UX</option>
+                                    <option value="System Architect">System Architect</option>
+                                    <option value="Digital Solutions Senior Officer">Digital Solutions Senior Officer
+                                    </option>
+                                    <option value="RF Engineer">RF Engineer</option>
+                                    <option value="System Administrator">System Administrator</option>
+                                    <option value="Senior Training Officer">Senior Training Officer</option>
+                                    <option value="Field Engineer Radar">Field Engineer Radar</option>
+                                    <option value="Data Analyst">Data Analyst</option>
+                                    <option value="Consultant ">Consultant </option>
+                                    <option value="Linguistic">Linguistic</option>
+                                    <option value="Radar Engineer">Radar Engineer</option>
+                                    <option value="Inventory Admin">Inventory Admin</option>
+                                    <option value="Machine Learning Engineer">Machine Learning Engineer</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputEmail3"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Status
+                                    Karyawan</label>
+                                <select name="statuskaryawan" class="js-example-basic-single col-sm-3 form-control-sm">
+                                    <option value="Tetap">Permanent</option>
+                                    <option value="Kontrak">Fixed-term contracts</option>
+                                    <option value="Freelance">Freelance</option>
+                                </select>
+                            </div>
+                            <div class="form-group row">
+                                <label for="exampleInputEmail3"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Penempatan
+                                    Kerja</label>
+                                <select name="site" class="js-example-basic-single col-sm-3 form-control-sm">
+                                    <option value="Jakarta">Jakarta</option>
+                                    <option value="Yogyakarta">Yogyakarta</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="exampleInputName1"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">Tanggal
+                                    Bergabung</label>
+                                <!-- <input type="text" class="form-control col-sm-3 form-control-sm" name="tanggalmasuk" id="tanggalmasuk" placeholder="2007-02-27"> -->
+                                <input type="date" class="form-control col-sm-3 form-control-sm" name="tanggalmasuk"
+                                    id="tanggalmasuk" data-date="" value="2000-08-17" required>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="exampleInputEmail3"
+                                    class="col-sm-3 col-form-label form-control-sm font-weight-light">User Role
+                                    Aplikasi</label>
+                                <select name="role" class="col-sm-3">
+                                    {% for roles in role %}
+                                    <option value="{{ roles['role_id'] }}">{{ roles["role_name"] }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <button type="submit" name='register' id="register"
+                                        class="btn btn-success btn-sm">Submit</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include "site_template/footer.html" %}
+
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+{{ super()}}
+{% endblock javascripts %}

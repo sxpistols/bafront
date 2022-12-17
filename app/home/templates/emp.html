@@ -1,0 +1,114 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+
+    {% include "site_template/navigation.html" %}
+      
+    <!-- Header -->
+    <div class="header pb-1 pt-1 pt-lg-1 d-flex align-items-center" style="min-height: 600px; background-image: url(/static/assets/img/theme/dirt-jumping-1470733487000-1v53s31445jz7-fef5827.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+        <div class="row">
+        <div class="col-lg-7 col-md-10">
+            <h1 class="display-2 text-white">Hello {{ current_user.username }}</h1>
+            <p class="text-white mt-0 mb-1">
+                This is your profile page. 
+            You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+        </div>
+        </div>
+    </div>
+    </div>
+      
+    <!-- Page content -->
+    {% for karyawan in karyawan %}
+    <div class="container-fluid mt--7" >
+
+        <div class="row">
+            <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0" >
+            <div class="card card-profile shadow" >
+                <div class="row justify-content-center">
+                <div class="col-lg-3 order-lg-2">
+                    <div class="card-profile-image">
+                    <a href="#">
+                        <img src="/static/assets/img/theme/Linux-PNG-Image-25417-300x255.png" class="rounded-circle">
+                    </a>
+                    </div>
+                </div>
+                </div>
+                <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                
+                </div>
+                <div class="card-body pt-0 pt-md-4">
+                <div class="row">
+                    <div class="col">
+                    <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                        <div>
+                        <span class="mb-0">{{ karyawan['divisi'] }}</span>
+                        <span class="description">Divisi</span>
+                        </div>
+                        <div>
+                        <span class="mb-0">{{ karyawan['posisi'] }}</span>
+                        <span class="description">Posisi</span>
+                        </div>
+                        <div>
+                        <span class="mb-0">{{ karyawan['site'] }}</span>
+                        <span class="description">Site</span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <h3>
+                    {{ karyawan['fullname']}}<span class="font-weight-light">, 17</span>
+                    </h3>
+                    <div class="h5 font-weight-300">
+                    <i class="ni location_pin mr-2"></i>{{ karyawan['alamat'] }}
+                    </div>
+                    <div class="h5 mt-4">
+                    <i class="ni business_briefcase-24 mr-2"></i>{{ karyawan['tanggalmasuk'] }} - {{ karyawan['statuskaryawan'] }}
+                    </div>
+                    <div>
+                    <i class="ni education_hat mr-2"></i>{{ karyawan['nik'] }}
+                    </div>
+                    <hr class="my-4" />
+                    <p>"There are two blessings which many people lose: (They are) health and free time for doing good."</p>
+                    <a href="https://www.sunnah.com/urn/60290">Show more</a>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-xl-8 order-xl-1">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                
+                    <iframe
+                    style="width: 100%; height: 550px; overflow: hidden;"
+                    src="https://playpager.com/embed/reversi/index.html"
+                    scrolling="no">
+                    </iframe>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    
+        {% include "site_template/footer.html" %}
+        
+    </div>    
+
+
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ super()}}
+{% endblock javascripts %}

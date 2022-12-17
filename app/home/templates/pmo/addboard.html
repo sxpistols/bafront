@@ -1,0 +1,192 @@
+{% extends "base_site.html" %}
+
+{% block title %} Karyawan {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+  
+    <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+    
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
+        
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">Board Creator</h3>
+                    </div>
+                    <form class="forms-sample" method="POST" id="downloadreport" role="form">
+                    <div class="card-header bg-transparent">
+                        <!-- <button type="button" class="btn btn-primary btn-sm"> Download Report </button> -->
+                        <input type="date" class="form-control col-sm-2 form-control-sm" name="tanggal" id="dateDefault" data-date="" value="" required>
+                        
+                        <br>
+                        <button type="submit" name='download' id="daily" class="btn btn-success btn-sm" > Report Daily </button>
+                        <button type="submit" name='mdownload' id="monthly" class="btn btn-primary btn-sm" > Report Monthly </button>
+                        <!--<a href="/boarddaily" class="btn btn-success btn-sm active" role="button" aria-pressed="true"> Report Daily </a>
+                        <a href="/reportbyproject" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"> Report Monthly </a>
+                        -->
+                        
+                    </div>
+                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Anda Berencana Untuk Menonaktifkan Project ini,</p>
+                                    <p>Apakah ingin melanjutkan?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-success btn-ok">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display table table-striped table-bordered" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;width: 20%;%"> Nama User</th>
+                                        <th style="text-align: center;width: 20%;%"> User Role</th>
+                                        <th style="text-align: center;width: 20%;%"> Nama Board</th>
+                                        <th style="text-align: center;"> Tanggal Eksekusi </th>
+                                        
+                                        
+                                        <!-- <th> Site </th> -->
+                                        <!-- <th> Supervisor </th> -->
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cl in proj %}
+                                    <tr>
+                                        <!-- <td> <a href="/project_detail/{{ cl['id_project'] }}">{{cl["project"] }}</a> </td> -->
+                                        <td> <a href="/board_detail/{{ cl['boardid'] }}">{{cl["fullname"] }} </a> </td>
+                                        <td> {{cl["role_trello"] }} </td>
+                                        <td> {{cl["name"] }} </td>
+                                        <td> {{cl["tanggal"] }} </td>
+                                         
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+       
+
+{% endblock content %}
+
+ {% block javascripts %}
+
+ 
+
+<script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    
+    <!-- Argon JS -->
+    <script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+
+<script type = "text/JavaScript">
+    $('#example').DataTable({
+    "pageLength": 25,
+    "order": [[ 3, "desc" ]],
+    "language": {
+        "paginate": {
+            "previous": "Prev",
+            "last": "Next",
+        }
+    }
+
+    } );
+</script>
+<script>
+        $('#confirm-approve').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            
+            $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+        });
+    </script>
+
+    <script>
+        $('#confirm-delete').on('click', '.btn-ok', function(e) {
+            var $modalDiv = $(e.delegateTarget);
+            var id = $(this).data('recordId');
+            $.post('/pmoproject', { id_project: id} ).then()
+             $modalDiv.addClass('loading');
+                setTimeout(function() {
+                    $modalDiv.modal('hide').removeClass('loading');
+                }, 1000)
+             document.location.reload();
+        });
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            var data = $(e.relatedTarget).data();
+            $('.title', this).text(data.recordTitle);
+            $('.btn-ok', this).data('recordId', data.recordId);
+        });
+    </script>
+    <script>
+        function setInputDate(_id){
+            var _dat = document.querySelector(_id);
+            var hoy = new Date(),
+                d = hoy.getDate(),
+                m = hoy.getMonth()+1, 
+                y = hoy.getFullYear(),
+                data;
+        
+            if(d < 10){
+                d = "0"+d;
+            };
+            if(m < 10){
+                m = "0"+m;
+            };
+        
+            data = y+"-"+m+"-"+d;
+            console.log(data);
+            _dat.value = data;
+        };
+        
+        setInputDate("#dateDefault");
+    </script>
+
+  {% endblock javascripts %}
+
+
+
+
+
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

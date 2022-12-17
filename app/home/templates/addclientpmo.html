@@ -1,0 +1,60 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+  <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+
+      
+    <div class="row">
+    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">Tambah Daftar Client</h3>
+                    </div>
+                    <div class="card-body">
+                    
+                    <form class="forms-sample" method="POST" id="addclientpmo" role="form">
+                            <div class="form-group row">
+                                <label for="exampleInputName1" class="col-sm-3 col-form-label form-control-sm font-weight-bold" style="color: #00cc99;">Detail Client</label>
+                                
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="exampleInputName1" class="col-sm-3 col-form-label form-control-sm font-weight-light">Nama Client</label>
+                                <input type="text" class="form-control col-sm-3 form-control-sm form-control-sm" name="nama" id="nama" placeholder="Microsoft" required>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="exampleInputName1" class="col-sm-3 col-form-label form-control-sm font-weight-light">Alamat Lengkap</label>
+                                <textarea class="form-control  col-sm-3" name="alamat" id="alamat" rows="3" required></textarea>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <button type="submit" name='register' id="register" class="btn btn-success btn-sm" >Submit</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        {% include "site_template/footer.html" %}
+        
+    </div>   
+</div> 
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ super()}}
+{% endblock javascripts %}

@@ -1,0 +1,129 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+
+    {% include "site_template/navigation.html" %}
+      
+    <div class="header pb-5 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 100px; background-image: url(/static/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+        <span class="mask bg-gradient-default opacity-8"></span>
+    </div>
+        
+    <div class="container-fluid mt--7">
+        <div class="row">
+            <div class="col-xl-12 order-xl-2 mb-5 mb-xl-0">
+                <div class="card shadow">
+                    {% for cl in project %}
+                    
+                    <div class="card-body  pt-3">
+                        <div class="row">
+                            <div class="col">
+                                <span class="heading">Project - {{ cl["project"] }}</span>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Client</h5>
+                            </div>
+                            <div class="col-6">
+                                <p>{{cl["client"] }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>PO Name</h5>
+                            </div>
+                            <div class="col-6">
+                                <p>{{cl["po_name"] }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>CR Name</h5>
+                            </div>
+                            <div class="col-6">
+                                <p>{{cl["cr_name"] }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Jenis Project</h5>
+                            </div>
+                            <div class="col-6">
+                                <p>{{cl["jenis"] }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Tanggal Dimulai</h5>
+                            </div>
+                            <div class="col-6">
+                                <p>{{cl["mulai"] }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Target Selesai</h5>
+                            </div>
+                            <div class="col-6">
+                                <p>{{cl["selesai"] }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <span class="heading">Resources</span>
+                        </div>
+                    </div>
+                    <br>
+                    {% for cl in pm %}
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Project Manager</h5>
+                            </div>
+                            <div class="col-6">
+                                <p>{{cl["pm"] }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% for cl in sa %}
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>System Analyst</h5>
+                            </div>
+                            <div class="col-6">
+                                <p>{{cl["sa"] }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    {% for cl in dev %}
+                        <div class="row">
+                            <div class="col-4">
+                                <h5>Developer</h5>
+                            </div>
+                            <div class="col-6">
+                                <p>{{cl["developer"] }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+        {% include "site_template/footer.html" %}
+        
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ super()}}
+{% endblock javascripts %}

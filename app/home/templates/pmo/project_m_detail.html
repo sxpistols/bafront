@@ -1,0 +1,214 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+
+
+<!-- Header -->
+<!-- Header container -->
+
+
+<!-- Page content -->
+
+<div class="row">
+
+  <div class="col-xl-12 order-xl-1">
+    <div class="card bg-secondary shadow">
+
+      <div class="card-body">
+        {% for emp in proj %}
+
+        <form class="forms-sample" method="POST" id="updateproject" role="form">
+          <input type="hidden" name="board" value="{{ emp.id }}" />
+          <!-- <p>Lama Bekerja : {{ emp.year }} tahun, {{ emp.month }} bulan, {{ emp.day}} hari </p> -->
+          <h6 class="heading-small text-muted mb-2">Project information</h6>
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <!-- {{ emp.nama }} -->
+                  <h2 class="subtitle is-6"> Nama Project </h2>
+                  <h2 class="title is-4"> {{ emp.project }}</h2>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <!-- {{ emp.nama }} -->
+                  <h2 class="subtitle is-6"> Project Manager </h2>
+                  <h2 class="title is-4"> {{ emp.fullname }}</h2>
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <!-- {{ emp.nama }} -->
+                  <h2 class="subtitle is-6"> Nama Client </h2>
+                  <h2 class="title is-4"> {{ emp.nama }}</h2>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <!-- {{ emp.nama }} -->
+                  <h2 class="subtitle is-6"> Project Div </h2>
+                  <h2 class="title is-4"> {{ emp.projectdiv }}</h2>
+                  <!-- <input type="text" name="mandays" class="form-control form-control-alternative"
+                    placeholder="First name" value="{{ emp.mandays }}"> -->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <!--  -->
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <!-- {{ emp.nama }} -->
+                  <h2 class="subtitle is-6"> Mandays Digunakan </h2>
+                  <h2 class="title is-4"> {{ emp.jumlah }}</h2>
+                  <!-- <input type="text" name="mandays" class="form-control form-control-alternative"
+                                placeholder="First name" value="{{ emp.mandays }}"> -->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Start Date / yyyy-mm-dd </label>
+                  <input type="text" name="startd" class="form-control form-control-alternative"
+                    placeholder="First name" value="{{ emp.start_date }}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> End Date / yyyy-mm-dd </label>
+                  <input type="text" name="endd" class="form-control form-control-alternative" placeholder="First name"
+                    value="{{ emp.end_date }}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Jumlah Mandays di Setting </label>
+                  <input type="text" name="mandays" class="form-control form-control-alternative"
+                    placeholder="First name" value="{{ emp.mandays }}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Nilai Project - Rupiah (tanpa
+                    koma) </label>
+                  <input type="text" name="nilai" class="form-control form-control-alternative" placeholder="First name"
+                    value="{{ emp.nilai_project}}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> NO PO </label>
+                  <input type="text" name="no_po" class="form-control form-control-alternative" 
+                    value="{{ emp.no_po }}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Nama PO </label>
+                  <input type="text" name="nama_po" class="form-control form-control-alternative"
+                    placeholder="Big Data Universe" value="{{ emp.nama_po}}">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> No Project </label>
+                  <input type="text" name="noproject" class="form-control form-control-alternative" placeholder=""
+                    value="{{ emp.noproject }}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Nama Project </label>
+                  <input type="text" name="namaproject" class="form-control form-control-alternative" value="{{ emp.namaproject }}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Invoice 1 </label>
+                  <input type="text" name="invoice1" class="form-control form-control-alternative" placeholder=""
+                    value="{{ emp.invoice1 }}">
+                </div>
+              </div>
+            
+            </div>
+
+            <div class="row">
+             
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Invoice 2 <br></label>
+                  <input type="text" name="invoice2" class="form-control form-control-alternative" value="{{ emp.invoice2 }}">
+                </div>
+              </div>
+            
+           
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Project Type :
+                    <br>Project/Riset/POC/CSR/Hibah/Administration </label>
+                  <input type="text" name="project_type" class="form-control form-control-alternative" placeholder=""
+                    value="{{ emp.project_type }}">
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label is-size-7" for="input-first-name"> Project Status : <br>
+                    ACTIVE/PENDING/CLOSED</label>
+                  <input type="text" name="status" class="form-control form-control-alternative"
+                    value="{{ emp.status }}">
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+          <!-- Address -->
+          <div class="pl-lg-4">
+
+            <div class="row">
+              <div class="col-sm-1">
+                <button type="submit" name='update' id="update" class="btn btn-success btn-sm"> Update
+                </button>
+              </div>
+              <!-- <div class="col-sm-1">
+                <button type="submit" name='resign' id="resign" class="btn btn-danger btn-sm"> Resign
+                </button>
+              </div> -->
+            </div>
+          </div>
+          <!-- Description -->
+
+        </form>
+        {% endfor %}
+        <br><br>
+        {% include "site_template/footer.html" %}
+      </div>
+
+    </div>
+      
+
+
+  </div>
+
+  {% endblock content %}
+
+  {% block javascripts %}
+  {{ super()}}
+  {% endblock javascripts %}

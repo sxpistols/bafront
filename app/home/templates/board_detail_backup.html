@@ -1,0 +1,220 @@
+{% extends "base_site.html" %}
+
+{% block title %} Karyawan {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+  
+    <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+    
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
+
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">{{ boards[0]['board_name'] }} Members</h3>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table style="width: 400;">
+                                <tbody>
+                                    <tr>
+                                    {% for cl in members %}
+                                        <tr>
+                                            <td> {{cl["fullname"] }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">Summary Activity </h3>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display table table-striped table-bordered" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;width: 30%;"> Full Name</th>
+                                        <th style="text-align: center;"> D 01 </th>
+                                        <th style="text-align: center;"> D 02 </th>
+                                        <th style="text-align: center;"> D 03 </th>
+                                        <th style="text-align: center;"> D 04 </th>
+                                        <th style="text-align: center;"> D 05 </th>
+                                        <th style="text-align: center;"> D 06 </th>
+                                        <th style="text-align: center;"> D 07 </th>
+                                        <th style="text-align: center;"> D 08 </th>
+                                        <th style="text-align: center;"> D 09 </th>
+                                        <th style="text-align: center;"> D 10 </th>
+                                        <th style="text-align: center;"> D 11 </th>
+                                        <th style="text-align: center;"> D 12 </th>
+                                        <th style="text-align: center;"> D 13 </th>
+                                        <th style="text-align: center;"> D 14 </th>
+                                        <th style="text-align: center;"> D 15 </th>
+                                        <th style="text-align: center;"> D 16 </th>
+                                        <th style="text-align: center;"> D 17 </th>
+                                        <th style="text-align: center;"> D 18 </th>
+                                        <th style="text-align: center;"> D 19 </th>
+                                        <th style="text-align: center;"> D 20 </th>
+                                        <th style="text-align: center;"> D 21 </th>
+                                        <th style="text-align: center;"> D 22 </th>
+                                        <th style="text-align: center;"> D 23 </th>
+                                        <th style="text-align: center;"> D 24 </th>
+                                        <th style="text-align: center;"> D 25 </th>
+                                        <th style="text-align: center;"> D 26 </th>
+                                        <th style="text-align: center;"> D 27 </th>
+                                        <th style="text-align: center;"> D 28 </th>
+                                        <th style="text-align: center;"> D 29 </th>
+                                        <th style="text-align: center;"> D 30 </th>
+                                        <th style="text-align: center;"> D 31 </th>
+                                        
+                                        <!-- <th> Site </th> -->
+                                        <!-- <th> Supervisor </th> -->
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cl in boards %}
+                                    <tr>
+                                        <td> {{cl["fullname"] }} </td>
+                                        <td align="right"> {{cl["tanggal_01"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_02"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_03"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_04"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_05"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_06"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_07"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_08"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_09"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_10"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_11"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_12"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_13"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_14"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_15"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_16"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_17"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_18"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_19"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_20"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_21"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_22"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_23"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_24"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_25"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_26"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_27"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_28"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_29"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_30"] | int() | default("-",True) }} </td>
+                                        <td align="right"> {{cl["tanggal_31"] | int() | default("-",True) }} </td>
+                                       
+<!--                                        <td> <a href="https://trello.com/c/{{ cl['shortlink'] }}">{{cl["card"] }} </a></td> -->
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+       
+
+{% endblock content %}
+
+ {% block javascripts %}
+
+ 
+
+<script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    
+    <!-- Argon JS -->
+    <script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+
+<script type = "text/JavaScript">
+    $('#example').DataTable({
+    "pageLength": 10,
+    "order": [[ 3, "desc" ]],
+    "language": {
+        "paginate": {
+            "previous": "Prev",
+            "last": "Next",
+        }
+    }
+
+    } );
+</script>
+<script>
+        $('#confirm-approve').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+            
+            $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+        });
+    </script>
+
+    <script>
+        $('#confirm-delete').on('click', '.btn-ok', function(e) {
+            var $modalDiv = $(e.delegateTarget);
+            var id = $(this).data('recordId');
+            $.post('/pmoproject', { id_project: id} ).then()
+             $modalDiv.addClass('loading');
+                setTimeout(function() {
+                    $modalDiv.modal('hide').removeClass('loading');
+                }, 1000)
+             document.location.reload();
+        });
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            var data = $(e.relatedTarget).data();
+            $('.title', this).text(data.recordTitle);
+            $('.btn-ok', this).data('recordId', data.recordId);
+        });
+    </script>
+
+  {% endblock javascripts %}
+
+
+
+
+
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

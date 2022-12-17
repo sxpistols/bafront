@@ -1,0 +1,62 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+{% endblock stylesheets %}
+
+{% block content %}
+
+
+<!-- Header -->
+<!-- Header container -->
+
+
+<!-- Page content -->
+
+<div class="row">
+
+    <div class="col-xl-12 order-xl-1">
+        <div class="card bg-secondary shadow">
+
+            <div class="card-body">
+                {% for emp in karyawan %}
+                <form class="forms-sample" method="POST" id="updatekaryawan" role="form">
+                    <h4 class="heading mb-4">{{ emp.employee }} </h4>
+                    <input type="hidden" id="fullname" name="fullname" value="{{emp.employee}}"">
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">Skills</label>
+                                    <textarea rows="6" cols="100" id="skill" name="skill" >{{ emp.skill }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <button type="submit" name='update' id="update" class="btn btn-success btn-sm"> Update
+                                </button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <hr class="my-4" />
+                    <!-- Description -->
+
+                </form>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% include "site_template/footer.html" %}
+
+    </div>
+
+    {% endblock content %}
+
+    {% block javascripts %}
+    {{ super()}}
+    {% endblock javascripts %}

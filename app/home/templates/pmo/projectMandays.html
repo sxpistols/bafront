@@ -1,0 +1,233 @@
+{% extends "base_site.html" %}
+
+{% block title %} Karyawan {% endblock title %}
+
+{% block stylesheets %}
+{{ super() }}
+
+<link href="{{ url_for('static', filename='assets/css/bulma.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+<!-- Icons -->
+<link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}"
+    rel="stylesheet">
+<!-- CSS Files -->
+<link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="container-fluid" style="padding-top: 10px;">
+
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <form class="forms-sample" method="POST" id="downloadreport" role="form">
+                    <div class="card-content bg-transparent">
+                        <h3 class="mb-0">Daftar Mandays Project {{ tahun }} </h3>
+
+
+                    </div>
+                    <div class="card-header bg-transparent">
+                        <div class="select is-small">
+                            <select name="tahun" class="select form-control col-sm-2 is-small">
+                                <option value="2021"> Select Tahun </option>
+                                <option value="2020"> 2020 </option>
+                                <option value="2021"> 2021 </option>
+                                <option value="2022"> 2022 </option>
+                            </select>
+                        </div>
+                        <div class=" pl-3">
+                            <button type="submit" name='show' id="show" class="btn btn-primary btn-sm"> Show
+                            </button>
+                            <button type="submit" name='mdownload' id="daily" class="btn btn-success btn-sm"> Download
+                                Report </button>
+                                <button type="submit" name='msetting' class="btn btn-info btn-sm"> Setting
+                                    Project </button>
+                        </div>
+
+                    </div>
+
+                    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+                        aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">×</button>
+                                    <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Anda Berencana Untuk Menonaktifkan Project ini,</p>
+                                    <p>Apakah ingin melanjutkan?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <button type="button" class="btn btn-success btn-ok">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display table table-striped table-bordered table-sm wrap"
+                                style="width: 100%;line-height: 1rem">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align: center;width: 40%;font-size: 10px;"> Nama Project</th>
+                                        
+                                        
+                                        
+                                        <!-- <th style="text-align: center;width: 10%;"> Client</th> -->
+                                        
+                                        <th style="text-align: center;width: 5%;font-size: 10px;"> Target </th>
+                                        <th style="text-align: center;width: 5%;font-size: 10px;"> Used </th>
+                                        <th style="text-align: center;width: 10%;font-size: 10px;"> Nilai (Rupiah) </th>
+                                        <th style="text-align: center;width: 10%;font-size: 10px;"> PM </th>
+                                        <th style="text-align: center;width: 10%;font-size: 10px;"> NO PO </th>
+                                        <th style="text-align: center;width: 10%;font-size: 10px;"> Nama PO </th>
+                                        <th style="text-align: center;width: 5%;font-size: 10px;"> Type </th>
+                                        <th style="text-align: center;width: 5%;font-size: 10px;"> Status</th>
+                                        <th style="text-align: center;width: 1%;font-size: 10px;"> Edit </th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    {% for cl in proj %}
+                                    <tr>
+                                        <!-- <td> <a href="/project_detail/{{ cl['id_project'] }}">{{cl["project"] }}</a> </td> -->
+                                        <!-- <td> <a href="/board_detail/{{ cl['id'] }}">{{cl["project"] }} </a> </td> -->
+                                        <td style="font-size: 10px;"> <a href="/board_detail/{{ cl['id'] }}">{{cl["project"] }}
+                                            </a>
+                                        </td>
+                                        
+                                        <td style="text-align: right;font-size: 10px"><b> {{ cl["mandays"] |
+                                                default("0",True) }} </b>
+                                        </td>
+                                        <!-- <td>{{cl["project"] }} </td> -->
+
+                                        <!-- <td> {{cl["id"] }} </td> -->
+                                        {% if cl["jumlah"]|int > 1000 %}
+                                        <td style="text-align: right;color: rgb(206, 22, 38);font-size: 10px"><b>{{ cl["jumlah"] }} </b>
+                                        </td>
+                                        {% elif cl["jumlah"]|int > 700 %}
+                                        <td style="text-align: right;color: rgb(75, 9, 151);font-size: 10px"><b>{{ cl["jumlah"] }} </b>
+                                        </td>
+                                        {% else %}
+                                        <td style="text-align: right;color: rgb(36, 214, 19);font-size: 10px"><b>{{ cl["jumlah"] }} </b>
+                                        </td>
+                                        {% endif %}
+                                        <td style="text-align: right;font-size: 10px"> {{ '{0:,}'.format(cl["nilai_project"] | int) |
+                                        default("0",True) }} </td>
+                                        <td style="font-size: 10px;"> {{cl["fullname"] }} </td>
+                                        <td style="text-align: left;font-size: 10px;"> {{cl["no_po"] | default("-",True) }} </td>
+                                        <td style="text-align: left;font-size: 10px;"> {{cl["nama_po"] | default("-",True) }} </td>
+                                        <td style="font-size: 10px;"> {{cl["project_type"] }} </td>
+                                        <td style="font-size: 10px;" align='right'> {{cl["status"] |
+                                            default("",True) }} </td>
+                                        <td style="text-align: right;color: rgb(206, 22, 38);font-size: 10px"><a href="/project_m_detail/{{ cl['id'] }}"> <i class='fas fa-edit'></i>
+                                        </a>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+{% endblock content %}
+
+{% block javascripts %}
+
+
+bootstrap-datepicker.min.js"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+
+<!-- Argon JS -->
+<script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+
+<script type="text/JavaScript">
+    $('#example').DataTable({
+    "pageLength": 25,
+    "order": [[ 0, "asc" ]],
+    "language": {
+        "paginate": {
+            "previous": "Prev",
+            "last": "Next",
+        }
+    }
+
+    } );
+</script>
+
+<script>
+    $('#confirm-approve').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+    });
+</script>
+
+<script>
+
+    $('#confirm-delete').on('click', '.btn-ok', function (e) {
+        var $modalDiv = $(e.delegateTarget);
+        var id = $(this).data('recordId');
+        $.post('/pmoproject', { id_project: id }).then()
+        $modalDiv.addClass('loading');
+        setTimeout(function () {
+            $modalDiv.modal('hide').removeClass('loading');
+        }, 1000)
+        document.location.reload();
+    });
+    $('#confirm-delete').on('show.bs.modal', function (e) {
+        var data = $(e.relatedTarget).data();
+        $('.title', this).text(data.recordTitle);
+        $('.btn-ok', this).data('recordId', data.recordId);
+    });
+</script>
+<script>
+    $(".register").click(function () {
+        var target = $(this).data("mymodal");
+        $("html").addClass("is-clipped");
+        $(mymodal).addClass("is-active");
+    });
+
+    // $(".modal-close").click(function () {
+    //     $("html").removeClass("is-clipped");
+    //     $(this).parent().removeClass("is-active");
+    // });
+</script>
+
+{% endblock javascripts %}
+
+
+
+
+
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

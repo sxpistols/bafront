@@ -1,0 +1,69 @@
+* {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+#flag_active {
+	color: green;
+}
+
+#flag_inactive {
+	color: red;
+}
+
+#table_processes_row {
+	height: 40px;
+	border-top: .12em solid #A9A9A9;
+}
+
+td {
+	border-top: .12em solid #ddd;
+}
+
+th {
+	background-color: #DCDCDC;
+	text-align: center;
+}
+
+#table_processes {
+	width: 100%;
+	text-align: center;
+}
+
+#table_filters{
+	margin-top:15px;
+	width:50%;
+	height:100%;
+	text-align:center;
+}
+
+#table_filters td{
+	padding-left:20px;
+}
+
+#table_filters input{
+	height:30px;
+	width: 140px;
+}
+
+#status_comboBox{
+	height:30px;
+	width: 140px;
+}
+
+#status_comboBox option{
+	width:100px;
+}
+
+#records_comboBox{
+	height:30px;
+	width: 60px;
+}
+
+
+#records_comboBox option{
+	width:100px;
+}

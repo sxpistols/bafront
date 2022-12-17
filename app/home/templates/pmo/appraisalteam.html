@@ -1,0 +1,136 @@
+{% extends "base_site.html" %}
+
+{% block title %} Karyawan {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+  
+    <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+    
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
+        
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0">Appraisal {{ current_user.username | replace(".", " ") | capitalize | upper }} Team Member </h3>
+                    </div>
+
+                    <form class="forms-sample" method="POST" id="downloadreport" role="form">
+                        
+                        
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="example" class="display table table-striped table-bordered" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;"> No</th>
+                                            <th style="width: 25%;"> Nama Resource</th>
+                                            <th style="text-align: center"> Posisi</th>
+                                            <th style="text-align: center"> Divisi</th>
+                                            <th style="text-align: center"> Performance </th>
+                                            <th style="text-align: center"> Potential </th>
+                                            <th style="text-align: center"> Attitude </th>
+                                            <th style="text-align: center;width: 1%;font-size: 10px;"> Detail </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% set count = namespace(value=1) %}
+                                        {% for cl in karyawan %}
+                                        <tr>
+                                            <td style="text-align: right;"> {{ count.value }} </td>
+                                            {% set count.value = count.value + 1 %}
+                                            <td> <a href="/addappraisal/{{ cl['user_id'] }}"> {{cl["fullname"] }} </a></td>
+                                            <td> {{cl["posisi"] | default("",True) }} </td>
+                                            <td> {{cl["divisi"] | default("",True) }} </td>
+                                            <td> {{cl["performance"] | default("",True) }} </td>
+                                            <td> {{cl["potential"] | default("",True) }} </td>
+                                            <td> {{cl["attitude"] | default("",True) }} </td>
+                                            {% if cl["performance"] %} 
+                                                <td style="text-align: right;color: rgb(206, 22, 38);font-size: 10px"><a href="/appraisaldetail/{{ cl['appraisalid'] }}"> <i class='fas fa-info-circle'></i> 
+                                            {% endif %}
+                                            </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+       
+
+{% endblock content %}
+
+ {% block javascripts %}
+
+ 
+
+<script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    
+    <!-- Argon JS -->
+    <script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
+
+<script type = "text/JavaScript">
+    $(document).ready(function() {
+    var t = $('#example').DataTable( {
+        "pageLength": 100,
+        "language": {
+            "paginate": {
+                "previous": "Prev",
+                "last": "Next",
+            },
+        },
+        "columnDefs": [ {
+            "searchable": false,
+            "orderable": false,
+            "targets": 0
+        } ],
+        "order": [[ 1, 'asc' ]]
+    } );
+ 
+    t.on( 'order.dt search.dt', function () {
+        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+} );
+</script>
+
+  {% endblock javascripts %}
+
+
+
+
+
+{% block extra_javascripts %}
+{% endblock extra_javascripts %}

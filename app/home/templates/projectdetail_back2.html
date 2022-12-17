@@ -1,0 +1,278 @@
+{% extends "base_site.html" %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block stylesheets %}
+  {{ super() }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+{% endblock stylesheets %}
+
+{% block content %}
+
+      
+    <!-- Header -->
+    <div class="header pb-2 pt-2 pt-lg-2 d-flex align-items-center" style="min-height: 150px; background-image: url(/static/assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-default opacity-8"></span>
+    <!-- Header container -->
+    
+    </div>
+      
+    <!-- Page content -->
+    <div class="container-fluid mt--7">
+
+        <div class="row">
+            
+            </div>
+            <div class="col-xl-12 order-xl-1">
+            <div class="card bg-secondary shadow">
+                <div class="card-header bg-white border-0">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                    <h3 class="mb-0">Project Information</h3>
+                    </div>
+                    <div class="col-4 text-right">
+                    <a href="#!" class="btn btn-sm btn-primary">Update</a>
+                    </div>
+                </div>
+                </div>
+                <div class="card-body">
+                {% for cl in project %}
+                <form>
+                    <h6 class="heading-small text-muted mb-4">{{ cl["project"] }}</h6>
+                    <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-username">Client</label>
+                            <input type="text" id="client" class="form-control form-control-sm" disabled="disabled" value="{{ cl["client"] }}">
+                        </div>
+                        </div>
+                        <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-email">PO Name</label>
+                            <input type="text" id="po_name" class="form-control form-control-sm" disabled="disabled" value="{{ cl["po_name"] }}">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label class="form-control-label" for="input-first-name">CR Name</label>
+                                <input type="text" id="cr_name" class="form-control form-control-sm" disabled="disabled" value="{{ cl["cr_name"] }}">
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-last-name">Jenis Project</label>
+                            <input type="text" id="jenis" class="form-control form-control-sm" disabled="disabled" value="{{ cl["jenis"] }}">
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">Tanggal Dimulai</p>
+                                    <h6>DD/MM/YYYY</h6>
+                                </blockquote>
+                                <input type="date" class="form-control col-sm-3 form-control-sm" name="mulai" id="mulai" data-date="" required value="{{ cl["mulai"] }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <blockquote class="blockquote">
+                                    <p class="mb-0">Tanggal Selesai</p>
+                                    <h6>DD/MM/YYYY</h6>
+                                </blockquote>
+                                <input type="date" class="form-control col-sm-3 form-control-sm" name="selesai" id="selesai" data-date="" required value="{{ cl["selesai"] }}">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% endfor %}
+                    </div>
+                    <hr class="my-4" />
+                    <!-- Address -->
+                    <h6 class="heading-small text-muted mb-4">Resources information</h6>
+                    <div class="pl-lg-4">
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">Project Manager</label>
+                            {% for cl in pm %}
+                                <input id="pm" class="form-control form-control-sm"  value="{{ cl["pm"] }}" type="text" disabled="disabled">
+                            {% endfor %}
+                        </div>
+                        </div>
+                    </div>
+                   
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">System Analyst</label>
+                            {% for cl in sa %}
+                                <input id="sa" class="form-control form-control-sm"  value="{{ cl["sa"] }}" type="text" disabled="disabled">
+                            {% endfor %}
+                        </div>
+                        </div>
+                    </div>
+                     <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">Project Admin</label>
+                            {% for cl in pa %}
+                                <input id="pa" name="pa" class="form-control form-control-sm"  value="{{ cl["pa"] }}" type="text" disabled="disabled">
+                            {% endfor %}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address" id="changeMe">Developer</label>
+                        </div>
+                        </div>
+                    </div>
+                    {% for cl in dev %}
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <input type="text" class="form-control form-control-sm -sm col-sm-5 mx-sm-3 mb-2" name="dev" id="dev" required value="{{ cl["developer"] }}">
+                                <button type="button" class="btn btn-warning btn-sm mb-2">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">Quality Control</label>
+                           
+                        </div>
+                        </div>
+                    </div>
+                    {% for cl in qc %}
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <input type="text" class="form-control form-control-sm -sm col-sm-5 mx-sm-3 mb-2" name="qc" id="qc" required value="{{ cl["qc"] }}">
+                                <button type="button" class="btn btn-warning btn-sm mb-2">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="row">
+                        <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="form-control-label" for="input-address">Technical Writer</label>
+                           
+                        </div>
+                        </div>
+                    </div>
+                    {% for cl in tw %}
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <input type="text" class="form-control form-control-sm -sm col-sm-5 mx-sm-3 mb-2" name="tw" id="tw" required value="{{ cl["tw"] }}">
+                                <button type="button" class="btn btn-warning btn-sm mb-2">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="row" id="buttin">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Add Resource</button>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="myForm" method="post">
+                                <div class="form-group row">
+                                    <label for="exampleInputEmail3" class="col-sm-3 col-form-label form-control-sm font-weight-light">Posisi</label>
+                                    <select name="dposisi" class="js-example-basic-single col-sm-5 form-control-sm">
+                                        <option value="Project Manager">Project Manager</option>
+                                        <option value="System Analyst">System Analyst</option>
+                                        <option value="Developer Analyst">Developer Analyst</option>
+                                        <option value="Developer">Developer</option>
+                                        <option value="Quality Control">Quality Control</option>
+                                        <option value="Technical Writer">Technical Writer</option>
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="exampleInputEmail3" class="col-sm-3 col-form-label form-control-sm font-weight-light">Select Name</label>
+                                    <select name="qc" class="selectpicker form-control col-sm-5 data-live-search="true" data-selected-text-format="count > 2" data-style="btn-info" multiple title="List Developer...">
+                                        {% for q in qc %}
+                                            <option value="{{q["fullname"] }}">{{q["fullname"] }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id="addresource">Send message</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    
+        {% include "site_template/footer.html" %}
+        
+    </div>    
+
+{% endblock content %}
+
+{% block javascripts %}
+  {{ super()}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+    <script>
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('New message to ' + recipient)
+            modal.find('.modal-body input').val(recipient)
+        })
+    </script>
+    <script>
+        $(function(){
+            $('#addresource').click(function(e){
+                $("#changeMe").text("your tip has been submitted!");
+            /* e.preventDefault();
+            $('#buttin').text($('#myForm').serialize());
+            */
+            /*
+            $.post('http://path/to/post', 
+                $('#myForm').serialize(), 
+                function(data, status, xhr){
+                // do something here with response;
+                });
+            */
+            });
+        });
+    </script>
+{% endblock javascripts %}
