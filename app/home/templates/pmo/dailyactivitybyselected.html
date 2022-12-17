@@ -61,13 +61,8 @@
                     <th style="text-align: center;width: 5%;"> Nama Karyawan </th>
                     <th style="text-align: center;width: 5%;"> Project </th>
                     <th style="text-align: center;"> Type </th>
-                    <!-- <th style="text-align: center;"> Terakhir Update </th> -->
                     <th style="text-align: center;"> Comment </th>
-                    <!-- <th style="text-align: center;"> Divisi </th> -->
                     <th style="text-align: center;"> Tanggal </th>
-                    <!-- <th> Site </th> -->
-                    <!-- <th> Supervisor </th> -->
-
                   </tr>
                 </thead>
                 <tbody>
@@ -77,11 +72,9 @@
                     <td align="right"> {{ count.value }} </td>
                     {% set count.value = count.value + 1 %}
                     <td> {{assignment["fullname"]}} </td>
-                    <!-- <td> {{assignment["tanggal"] | default("1945-08-16",True) }} </td> -->
                     <td align="right"> {{assignment["name"] }} </td>
                     <td align="right"> {{assignment["type"] }} </td>
                     <td align="left"> {{assignment["text"] }} </td>
-                    <!-- <td> {{assignment["divisi"]}} </td> -->
                     <td align="left"> {{assignment["tanggal"] }} </td>
                   </tr>
                   {% endfor %}

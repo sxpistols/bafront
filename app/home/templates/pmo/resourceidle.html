@@ -25,39 +25,21 @@
         <div class="row">
             <div class="col">
                 <div class="card shadow">
-                    <div class="card-header bg-transparent">
-                        <h3 class="mb-0">Resource Idle Default: Hari Ini</h3>
+                    <div class="card-content bg-transparent">
+                        <h3 class="mb-0">Resource Idle</h3>
                     </div>
 
                     <form class="forms-sample" method="POST" id="downloadreport" role="form">
+                        
                         <div class="card-header bg-transparent">
-                            <!-- <button type="button" class="btn btn-primary btn-sm"> Download Report </button> -->
-                            <input type="date" class="form-control col-sm-2 form-control-sm" name="tanggal" id="dateDefault" data-date="" value="" required>
-                            
+                            <input type="date" class="form-control col-sm-2 form-control-sm" name="tanggal" id="dateDefault"
+                                data-date="" value="" required>
                             <br>
-                            <button type="submit" name='show' id="daily" class="btn btn-success btn-sm" > Show </button>
-                            <button type="submit" name='mdownload' id="monthly" class="btn btn-primary btn-sm" > Download </button>
-                            <!--<a href="/boarddaily" class="btn btn-success btn-sm active" role="button" aria-pressed="true"> Report Daily </a>
-                            <a href="/reportbyproject" class="btn btn-primary btn-sm active" role="button" aria-pressed="true"> Report Monthly </a>
-                            -->
-                            
-                        </div>
-                        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        <h4 class="modal-title" id="myModalLabel">Confirm</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Anda Berencana Untuk Menonaktifkan Project ini,</p>
-                                        <p>Apakah ingin melanjutkan?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <button type="button" class="btn btn-success btn-ok">Close</button>
-                                    </div>
-                                </div>
+                            <div class="pl-3">
+                                <button type="submit" name='show' id="daily" class="btn btn-primary btn-sm"> Show
+                                </button>
+                                
+                                
                             </div>
                         </div>
                         <div class="card-body">
@@ -68,10 +50,6 @@
                                             <th style="width: 5%;"> No</th>
                                             <th style="width: 25%;"> Nama Resource</th>
                                             <th style="text-align: center"> Keterangan</th>
-                                            
-                                            <!-- <th> Site </th> -->
-                                            <!-- <th> Supervisor </th> -->
-
                                         </tr>
                                     </thead>
                                     <tbody>

@@ -26,7 +26,7 @@ app.config['MYSQL_USER'] = 'employee'
 app.config['MYSQL_PASSWORD'] = 'Syabian247#'
 app.config['MYSQL_DB'] = 'employee'
 mysqlX = MySQL(app) 
-
+BACKEND='localhost:9966'
 @blueprint.route('/')
 def route_default():
     return redirect(url_for('base_blueprint.login'))
@@ -53,9 +53,9 @@ def login():
         print(user, flush=True)
         parpar = {'username' : user, 'desc' : 'login'}
         authpar = {'username' : username, 'password' : password}
-        userlog = requests.post('http://localhost:9966/api/karyawan/userlog', params = parpar)
+        userlog = requests.post('http://'+BACKEND+'/api/karyawan/userlog', params = parpar)
 
-        crestatus = requests.post('http://localhost:9966/api/auth/rlogin', params = authpar)
+        crestatus = requests.post('http://'+BACKEND+'/api/auth/rlogin', params = authpar)
         crestatus = crestatus.json()
 
         # print('crestatus', flush = True)
@@ -75,7 +75,7 @@ def login():
     if current_user.role == 2 or current_user.role == 6 or current_user.role == 11:
         # return redirect(url_for('home_blueprint.pmo.index'))
 
-        r = requests.get('http://localhost:9966/api/pmo/ressum')
+        r = requests.get('http://'+BACKEND+'/api/pmo/ressum')
         a = []
         b = []
         for i in range(len(r.json()['Resource'])):
@@ -91,12 +91,12 @@ def login():
         # labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
         # values = [10, 9, 8, 7, 6, 4, 7, 8]
 
-        r = requests.get('http://localhost:9966/api/pmo/summary?user_role='+str(current_user.role))
-        s = requests.get('http://localhost:9966/api/trello/getlastten?user_role='+str(current_user.role))
+        r = requests.get('http://'+BACKEND+'/api/pmo/summary?user_role='+str(current_user.role))
+        s = requests.get('http://'+BACKEND+'/api/trello/getlastten?user_role='+str(current_user.role))
         #return render_template('/pmo/index.html', lastten=s.json()['LastTen'],summary = r.json()['Summary'], values=values, labels=labels, legend=legend)
         #return render_template('/pmo/index.html', lastten=s.json()['LastTen'], values=values, labels=labels, legend=legend)
         pars = { 'user_role', current_user.role }
-        r = requests.get('http://localhost:9966/api/karyawan/list?user_role='+str(current_user.role))
+        r = requests.get('http://'+BACKEND+'/api/karyawan/list?user_role='+str(current_user.role))
         return render_template('/karyawan.html', karyawan=r.json()['karyawan'])
 
     elif current_user.role != 2 and current_user.role != 5:
@@ -112,7 +112,7 @@ def addemp():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        r = requests.get('http://localhost:9966/api/role')
+        r = requests.get('http://'+BACKEND+'/api/role')
         return render_template('/addemp.html', role=r.json()['Role'])
     else:
         createdby = current_user.username
@@ -161,7 +161,7 @@ def addemp():
             'jurusan': jurusan, \
             'createdby': createdby \
             }
-        # requests.post('http://localhost:9966/api/karyawan/add', params=pars)
+        # requests.post('http://'+BACKEND+'/api/karyawan/add', params=pars)
 
 
         if 'register' in request.form:
@@ -177,11 +177,11 @@ def addemp():
             db.session.add(user)
             db.session.commit()
 
-            addkaryawan = requests.post('http://localhost:9966/api/karyawan/add', params=pars)
+            addkaryawan = requests.post('http://'+BACKEND+'/api/karyawan/add', params=pars)
             #print(addkaryawan.url, flush=True)
 
             #parmail = { 'user_id': userid, 'password': finalString, 'fullname': fullname, 'email': email}
-            #addkaryawan = requests.post('http://localhost:9966/api/karyawan/mailreg', params=parmail)
+            #addkaryawan = requests.post('http://'+BACKEND+'/api/karyawan/mailreg', params=parmail)
 
 
         return redirect(url_for('base_blueprint.karyawan'))
@@ -203,12 +203,12 @@ def addclientpmo():
             'nama': nama, \
             'alamat': alamat \
             }
-        # requests.post('http://localhost:9966/api/karyawan/add', params=pars)
+        # requests.post('http://'+BACKEND+'/api/karyawan/add', params=pars)
 
 
         if 'register' in request.form:
             
-            addclient = requests.post('http://localhost:9966/api/pmo/addclient', params=pars)
+            addclient = requests.post('http://'+BACKEND+'/api/pmo/addclient', params=pars)
 
         return redirect(url_for('base_blueprint.pmoclient'))
 
@@ -220,7 +220,7 @@ def coba():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        r = requests.get('http://localhost:9966/api/trello/allboards')
+        r = requests.get('http://'+BACKEND+'/api/trello/allboards')
         
         return render_template('/daftarproject.html', boards=r.json()['Boards'])
 
@@ -296,7 +296,7 @@ def karyawan():
         return redirect(url_for('base_blueprint.login'))
 
     pars = { 'user_role', current_user.role }
-    r = requests.get('http://localhost:9966/api/karyawan/list?user_role='+str(current_user.role))
+    r = requests.get('http://'+BACKEND+'/api/karyawan/list?user_role='+str(current_user.role))
     
     return render_template('/karyawan.html', karyawan=r.json()['karyawan'])
 
@@ -308,7 +308,7 @@ def kresign():
         return redirect(url_for('base_blueprint.login'))
 
     pars = { 'user_role', current_user.role }
-    r = requests.get('http://localhost:9966/api/karyawanresign/list?user_role='+str(current_user.role))
+    r = requests.get('http://'+BACKEND+'/api/karyawanresign/list?user_role='+str(current_user.role))
     
     return render_template('/karyawanresign.html', karyawan=r.json()['karyawan'])
 
@@ -321,7 +321,7 @@ def emp(user_id):
         return redirect(url_for('base_blueprint.login'))
 
     pars = { 'user_id' : user_id }
-    r = requests.get('http://localhost:9966/api/karyawan',params=pars)
+    r = requests.get('http://'+BACKEND+'/api/karyawan',params=pars)
 
     return render_template('/emp.html', karyawan=r.json()['karyawan'])
 
@@ -336,7 +336,7 @@ def user_detail(user_id):
 
     if request.method == 'GET':
         pars = { 'user_id' : user_id }
-        r = requests.get('http://localhost:9966/api/karyawan',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/karyawan',params=pars)
 
         return render_template('/user_detail.html', karyawan=r.json()['karyawan'])
 
@@ -367,17 +367,17 @@ def user_detail(user_id):
 
             pars = { 'username' : username,'email': email,'fullname' : fullname , 'telegram': telegram,'divisi': divisi,'posisi': posisi,'alamat': alamat,'telepon': telepon,'tanggalmasuk': tanggalmasuk, 'statuskaryawan': statuskaryawan, 'identitas': identitas,'statuspernikahan': statuspernikahan, 'pendidikan': pendidikan, 'institusi' : institusi, 'nikkaryawan' : nikkaryawan , 'trelloid': trelloid, 'jurusan': jurusan, 'resource': resource}
 
-            v = requests.post('http://localhost:9966/api/karyawan/update',params=pars)
+            v = requests.post('http://'+BACKEND+'/api/karyawan/update',params=pars)
 
         if 'resign' in request.form:
             username = request.form['username']
             pars = { 'username' : username }
 
-            v = requests.post('http://localhost:9966/api/karyawan/resign',params=pars)
+            v = requests.post('http://'+BACKEND+'/api/karyawan/resign',params=pars)
 
 
         pars = { 'user_id' : user_id }
-        r = requests.get('http://localhost:9966/api/karyawan',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/karyawan',params=pars)
 
         return render_template('/user_detail.html', karyawan=r.json()['karyawan'])
 
@@ -391,13 +391,13 @@ def cuti_delete(cutiid):
     if request.method == 'GET':
         
         pars = { 'cutiid' : cutiid }
-        r = requests.get('http://localhost:9966/api/karyawan/cutidelete',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/karyawan/cutidelete',params=pars)
 
-        dev = requests.get('http://localhost:9966/api/karyawan/list')
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
         if(current_user.role!=6):
-            cuti = requests.get('http://localhost:9966/api/karyawan/listcuti')
+            cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
         else:
-            cuti = requests.get('http://localhost:9966/api/karyawan/sdolistcuti')
+            cuti = requests.get('http://'+BACKEND+'/api/karyawan/sdolistcuti')
 
         return render_template('/daftarkaryawancuti.html', dev=dev.json()['karyawan'], cuti=cuti.json()['Cuti'])
 
@@ -411,7 +411,7 @@ def project_m_detail(project_id):
     if request.method == 'GET':
         
         pars = { 'project_id' : project_id }
-        r = requests.get('http://localhost:9966/api/trello/projectmdetail',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/trello/projectmdetail',params=pars)
 
         return render_template('/pmo/project_m_detail.html', proj=r.json()['Project'])
 
@@ -439,18 +439,18 @@ def project_m_detail(project_id):
             print(pars, flush=True)
 
             #print(pars, flush=True)
-            v = requests.post('http://localhost:9966/api/trello/pmndaysupdate',params=pars)
+            v = requests.post('http://'+BACKEND+'/api/trello/pmndaysupdate',params=pars)
 
         # if 'resign' in request.form:
         #     username = request.form['username']
         #     pars = { 'username' : username }
 
-        #     v = requests.post('http://localhost:9966/api/karyawan/resign',params=pars)
+        #     v = requests.post('http://'+BACKEND+'/api/karyawan/resign',params=pars)
 
 
 
         pars = { 'project_id' : board }
-        r = requests.get('http://localhost:9966/api/trello/projectmdetail',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/trello/projectmdetail',params=pars)
 
         return render_template('/pmo/project_m_detail.html', proj=r.json()['Project'])
 
@@ -462,7 +462,7 @@ def pmoclient():
         return redirect(url_for('base_blueprint.login'))
 
 
-    r = requests.get('http://localhost:9966/api/pmo/client')
+    r = requests.get('http://'+BACKEND+'/api/pmo/client')
     # print(r.json()['Assignment'],flush=True)
 
     # return {'OK' : 'Robot'}
@@ -486,36 +486,28 @@ def dailyactivitybyselected():
 
         # print(current_user,flush=True)
         pars = { 'user_role' : current_user.role }
-        namek = requests.get('http://localhost:9966/api/karyawan/list', params=pars)
+        namek = requests.get('http://'+BACKEND+'/api/karyawan/list', params=pars)
 
         tahun = datetime.today().strftime('%Y')
         bulan = datetime.today().strftime('%b')
         tanggal = datetime.today().strftime('%Y-%m')
         user_role = str(current_user.role)
-        # pars2 = { 'tahun': tahun , 'bulan': bulan, 'tanggal': tanggal, 'user_role': user_role}
-        # board = requests.get('http://localhost:9966/api/trello/boards',params=pars2)
 
-
-        # print(namek.json()['karyawan'],flush=True)
-        # return render_template('/addassignm.html', board = board.json()['Boards'],pm = pm.json()['PM'], valharini=hariini)
         return render_template('/pmo/dailyactivitybyselected.html', namak=namek.json()['karyawan'],  valharini=hariini)
     else:
 
         userid = { 'user_id' : current_user.username }
-        # namereq = requests.get('http://localhost:9966/api/karyawan', params=userid)
-        # name = namereq.json()['karyawan'][0]['fullname']
+
         karyawan = request.form['karyawan']
         dateassignment = request.form['dateassignment']
         endassignment = request.form['endassignment']
 
         pars = { 'user_role' : current_user.role }
-        namek = requests.get('http://localhost:9966/api/karyawan/list', params=pars)
-
-
+        namek = requests.get('http://'+BACKEND+'/api/karyawan/list', params=pars)
 
         pars = { 'karyawan' : karyawan, 'dateassignment' : dateassignment , 'endassignment': endassignment}
 
-        state = requests.get('http://localhost:9966/api/pmo/activityByDate', params=pars)
+        state = requests.get('http://'+BACKEND+'/api/pmo/activityByDate', params=pars)
 
         return render_template('/pmo/dailyactivitybyselected.html', project=state.json()['Project'],namak=namek.json()['karyawan'])
  
@@ -534,16 +526,9 @@ def timesheet():
         bulanB = datetime.today().strftime('%B')
         tahun  = tanggal[0:4]
         
-        # bulan = request.form['bulan']
-        # if request.form['bulan']:
-        #     pars = { 'tanggal':bulan }
-        # else:
         pars = { 'tanggal': tanggal, 'user_role' : current_user.role }
 
-        r = requests.get('http://localhost:9966/api/trello/reporttimesheet',params=pars)
-        # print(r.json()['Assignment'],flush=True)
-
-        # return {'OK' : 'Robot'}
+        r = requests.get('http://'+BACKEND+'/api/trello/reporttimesheet',params=pars)
         return render_template('/pmo/timesheet.html', proj=r.json()['Report'],bulanB=bulanB, tahunB=tahun)
     else:
         if 'download' in request.form:
@@ -557,7 +542,7 @@ def timesheet():
             tahun  = bulan[0:4]
 
             pars = { 'tanggal': bulan,'user_role' : current_user.role }
-            r = requests.get('http://localhost:9966/api/trello/reporttimesheet',params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/reporttimesheet',params=pars)
          
 
             return render_template('/pmo/timesheet.html', proj=r.json()['Report'],bulanB=bulanB, tahunB=tahun)
@@ -598,9 +583,9 @@ def board_detail(boardid):
 
         pars = { 'boardid' : boardid, 'tanggal' : tanggal }
         bd = { 'boardid' : boardid }
-        r = requests.get('http://localhost:9966/api/trello/boarddetail', params=pars)
-        s = requests.get('http://localhost:9966/api/trello/boardmembersmandays', params=pars)
-        b = requests.get('http://localhost:9966/api/trello/boardname', params=bd)
+        r = requests.get('http://'+BACKEND+'/api/trello/boarddetail', params=pars)
+        s = requests.get('http://'+BACKEND+'/api/trello/boardmembersmandays', params=pars)
+        b = requests.get('http://'+BACKEND+'/api/trello/boardname', params=bd)
 
 
         return render_template('/board_detail.html', boardname=b.json()['boardname'], boards=r.json()['Boards'], members=s.json()['Members'])
@@ -613,9 +598,9 @@ def board_detail(boardid):
 
             pars = { 'boardid' : boardid, 'tanggal' : tanggal }
             bd = { 'boardid' : boardid }
-            r = requests.get('http://localhost:9966/api/trello/boarddetail', params=pars)
-            s = requests.get('http://localhost:9966/api/trello/boardmembersmandays',params=pars)
-            b = requests.get('http://localhost:9966/api/trello/boardname', params=bd)
+            r = requests.get('http://'+BACKEND+'/api/trello/boarddetail', params=pars)
+            s = requests.get('http://'+BACKEND+'/api/trello/boardmembersmandays',params=pars)
+            b = requests.get('http://'+BACKEND+'/api/trello/boardname', params=bd)
             return render_template('/board_detail.html', boardname=b.json()['boardname'], boards=r.json()['Boards'], members=s.json()['Members'])
 
         if 'ddownload' in request.form:
@@ -624,7 +609,7 @@ def board_detail(boardid):
 
             pars = { 'boardid' : boardid, 'tanggal' : tanggal }
             path = '/home/dolants/baback/DailyDetail_'+boardid+'_'+tanggal+'.xlsx'
-            r = requests.get('http://localhost:9966/api/trello/boarddetaildaily', params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/boarddetaildaily', params=pars)
             
             return send_file(path, as_attachment=True)
 
@@ -635,7 +620,7 @@ def board_detail(boardid):
 
             pars = { 'boardid' : boardid, 'tanggal' : tanggal }
             path = '/home/dolants/baback/MonthlyDetail_'+boardid+'_'+tanggal+'.xlsx'
-            r = requests.get('http://localhost:9966/api/trello/boarddetailmonthly', params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/boarddetailmonthly', params=pars)
             
             return send_file(path, as_attachment=True)
 
@@ -657,7 +642,7 @@ def resourceactive():
         # else:
         pars = { 'tanggal': tanggal, 'role' : current_user.role }
 
-        r = requests.get('http://localhost:9966/api/trello/dailyactivity',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/trello/dailyactivity',params=pars)
         # print(r.json()['Assignment'],flush=True)
 
         # return {'OK' : 'Robot'}
@@ -668,7 +653,7 @@ def resourceactive():
             bulanB = datetime.today().strftime('%B')
 
             pars = { 'tanggal': tanggal, 'role' : current_user.role  }
-            r = requests.get('http://localhost:9966/api/trello/dailyactivity',params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/dailyactivity',params=pars)
          
 
             return render_template('/pmo/resourceactive.html', tanggal=tanggal, proj=r.json()['Activity'],bulanB=bulanB)
@@ -678,7 +663,7 @@ def resourceactive():
 
             pars = { 'tanggal' : tanggal }
             path = '/home/dolants/baback/DailyAct_'+tanggal+'.xlsx'
-            r = requests.get('http://localhost:9966/api/trello/actdetaildaily', params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/actdetaildaily', params=pars)
             
             return send_file(path, as_attachment=True)
 
@@ -688,7 +673,7 @@ def resourceactive():
 
             pars = { 'tanggal' : tanggal }
             path = '/home/dolants/baback/MonthlyAct_'+tanggal+'.xlsx'
-            r = requests.get('http://localhost:9966/api/trello/actdetailmonthly', params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/actdetailmonthly', params=pars)
 
 @blueprint.route('/monthlyactivity',methods=['GET','POST'])
 def monthlyactivity():
@@ -708,7 +693,7 @@ def monthlyactivity():
         # else:
         pars = { 'tahun': tahun,'user_role' : current_user.role }
 
-        r = requests.get('http://localhost:9966/api/trello/monthlyactkaryawanlist',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/trello/monthlyactkaryawanlist',params=pars)
         # print(r.json()['Assignment'],flush=True)
 
         # return {'OK' : 'Robot'}
@@ -719,7 +704,7 @@ def monthlyactivity():
             bulanB = datetime.today().strftime('%B')
 
             pars = { 'tanggal': tanggal }
-            r = requests.get('http://localhost:9966/api/trello/dailyactivity',params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/dailyactivity',params=pars)
          
 
             return render_template('/pmo/resourceactive.html', tanggal=tanggal, proj=r.json()['Activity'],bulanB=bulanB)
@@ -729,7 +714,7 @@ def monthlyactivity():
 
             pars = { 'tanggal' : tanggal }
             path = '/home/dolants/baback/DailyAct_'+tanggal+'.xlsx'
-            r = requests.get('http://localhost:9966/api/trello/actdetaildaily', params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/actdetaildaily', params=pars)
             
             return send_file(path, as_attachment=True)
 
@@ -739,7 +724,7 @@ def monthlyactivity():
 
             pars = { 'tanggal' : tanggal }
             path = '/home/dolants/baback/MonthlyAct_'+tanggal+'.xlsx'
-            r = requests.get('http://localhost:9966/api/trello/actdetailmonthly', params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/actdetailmonthly', params=pars)
 
 @blueprint.route('/resourceidle',methods=['GET','POST'])
 def resourceidle():
@@ -749,23 +734,15 @@ def resourceidle():
 
     if request.method == 'GET':
         user_role = current_user.role
-        if(user_role!=6):
-            r = requests.get('http://localhost:9966/api/pmo/resourceidle')
-        else:
-            r = requests.get('http://localhost:9966/api/sdo/resourceidlesdo')
-
+        r = requests.get('http://'+BACKEND+'/api/pmo/resourceidle')
         return render_template('/pmo/resourceidle.html', proj=r.json()['Resource'])
     else:
         user_role = current_user.role
         if 'show' in request.form:
             tanggal = request.form['tanggal']
             bulanB = datetime.today().strftime('%B')
-
             pars = { 'tanggal': tanggal }
-            if(user_role!=6):
-                r = requests.get('http://localhost:9966/api/pmo/resourceidledaily',params=pars)
-            else:
-                r = requests.get('http://localhost:9966/api/sdo/resourceidledailysdo',params=pars)
+            r = requests.get('http://'+BACKEND+'/api/pmo/resourceidledaily',params=pars)
             return render_template('/pmo/resourceidle.html', proj=r.json()['Resource'])
 
         if 'mdownload' in request.form:
@@ -773,7 +750,7 @@ def resourceidle():
             pars = { 'tanggal': tanggal }
 
             path = '/home/dolants/baback/ResIdle_'+tanggal+'.xlsx'
-            r = requests.get('http://localhost:9966/api/pmo/resourceidledailyD',params=pars)
+            r = requests.get('http://'+BACKEND+'/api/pmo/resourceidledailyD',params=pars)
             
             return send_file(path, as_attachment=True)
 
@@ -785,7 +762,7 @@ def pmoprojecthist():
 
 
     if request.method == 'GET':
-        r = requests.get('http://localhost:9966/api/pmo/projectshist')
+        r = requests.get('http://'+BACKEND+'/api/pmo/projectshist')
         # print(r.json()['Assignment'],flush=True)
 
         # return {'OK' : 'Robot'}
@@ -800,13 +777,13 @@ def addproject():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        r = requests.get('http://localhost:9966/api/pmo/client')
-        pm = requests.get('http://localhost:9966/api/pmo/listpm')
-        sa = requests.get('http://localhost:9966/api/pmo/listsa')
-        dev = requests.get('http://localhost:9966/api/pmo/listdev')
-        qc = requests.get('http://localhost:9966/api/pmo/listqc')
-        tw = requests.get('http://localhost:9966/api/pmo/listtw')
-        pa = requests.get('http://localhost:9966/api/pmo/listpa')
+        r = requests.get('http://'+BACKEND+'/api/pmo/client')
+        pm = requests.get('http://'+BACKEND+'/api/pmo/listpm')
+        sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
+        dev = requests.get('http://'+BACKEND+'/api/pmo/listdev')
+        qc = requests.get('http://'+BACKEND+'/api/pmo/listqc')
+        tw = requests.get('http://'+BACKEND+'/api/pmo/listtw')
+        pa = requests.get('http://'+BACKEND+'/api/pmo/listpa')
         return render_template('/addproject.html', client=r.json()['Client'], pm=pm.json()['PM'],sa=sa.json()['SA'],dev=dev.json()['Dev'],qc=qc.json()['QC'],tw=tw.json()['TW'],pa=pa.json()['PA'])
 
     else:
@@ -830,7 +807,7 @@ def addproject():
         print(qc, flush=True)
         
         
-        # requests.post('http://localhost:9966/api/karyawan/add', params=pars)
+        # requests.post('http://'+BACKEND+'/api/karyawan/add', params=pars)
 
 
         if 'register' in request.form:
@@ -854,7 +831,7 @@ def addproject():
                     }
                 
                 #print(pars, flush=True)
-                requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+                requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
                 i += 1
             ###################For QC
             i=0
@@ -873,7 +850,7 @@ def addproject():
                     }
                 
                 #print(pars, flush=True)
-                requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+                requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
                 i += 1
 
             ###################For TW
@@ -893,7 +870,7 @@ def addproject():
                     }
                 
                 #print(pars, flush=True)
-                requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+                requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
                 i += 1
 
             ###################For PM
@@ -910,7 +887,7 @@ def addproject():
                 }
             
             #print(pars, flush=True)
-            requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+            requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
 
             ###################For SA
             pars = { 'createdby': createdby, \
@@ -926,7 +903,7 @@ def addproject():
                 }
             
             #print(pars, flush=True)
-            requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+            requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
 
             ###################For PA
             pars = { 'createdby': createdby, \
@@ -942,7 +919,7 @@ def addproject():
                 }
             
             #print(pars, flush=True)
-            requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+            requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
 
         return redirect(url_for('base_blueprint.addproject'))
 
@@ -954,18 +931,18 @@ def karyawancuti():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        # r = requests.get('http://localhost:9966/api/pmo/client')
-        # pm = requests.get('http://localhost:9966/api/pmo/listpm')
-        # sa = requests.get('http://localhost:9966/api/pmo/listsa')
+        # r = requests.get('http://'+BACKEND+'/api/pmo/client')
+        # pm = requests.get('http://'+BACKEND+'/api/pmo/listpm')
+        # sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
         # if(current_user.role!=6):
-        #     dev = requests.get('http://localhost:9966/api/karyawan/list')
+        #     dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
         # else:
-        dev = requests.get('http://localhost:9966/api/karyawan/list?user_role='+str(current_user.role))
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/list?user_role='+str(current_user.role))
             
-        cuti = requests.get('http://localhost:9966/api/karyawan/listcuti')
-        # qc = requests.get('http://localhost:9966/api/pmo/listqc')
-        # tw = requests.get('http://localhost:9966/api/pmo/listtw')
-        # pa = requests.get('http://localhost:9966/api/pmo/listpa')
+        cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
+        # qc = requests.get('http://'+BACKEND+'/api/pmo/listqc')
+        # tw = requests.get('http://'+BACKEND+'/api/pmo/listtw')
+        # pa = requests.get('http://'+BACKEND+'/api/pmo/listpa')
         return render_template('/karyawancuti.html', dev=dev.json()['karyawan'], cuti=cuti.json()['Cuti'])
 
     else:
@@ -973,9 +950,9 @@ def karyawancuti():
 
         createdby = current_user.username
 
-        # dev = requests.get('http://localhost:9966/api/karyawan/list')
+        # dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
         dev = request.form['dev']
-        cuti = requests.get('http://localhost:9966/api/karyawan/listcuti')
+        cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
 
 
         if 'register' in request.form:
@@ -983,7 +960,7 @@ def karyawancuti():
             keterangan = request.form['ket']
             pars = { 'resource_name': dev, 'tanggal' : tanggal, 'keterangan' : keterangan }
 
-            requests.post('http://localhost:9966/api/karyawan/cuti', params=pars)
+            requests.post('http://'+BACKEND+'/api/karyawan/cuti', params=pars)
 
         return redirect(url_for('base_blueprint.daftarkaryawancuti'))  
 
@@ -995,9 +972,9 @@ def addkaryawanresign():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        dev = requests.get('http://localhost:9966/api/karyawan/list?user_role='+str(current_user.role))
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/list?user_role='+str(current_user.role))
             
-        # cuti = requests.get('http://localhost:9966/api/karyawan/listcuti')
+        # cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
         return render_template('/addkaryawanresign.html', dev=dev.json()['karyawan'])
 
     else:
@@ -1014,10 +991,10 @@ def addkaryawanresign():
             ket2 = request.form['ket2']
             pars = { 'createdby': createdby, 'karyawan' : karyawan, 'tanggal' : tanggal,'handover': handover,'ket':ket,'ket2':ket2 }
 
-            requests.post('http://localhost:9966/api/karyawan/addresign', params=pars)
+            requests.post('http://'+BACKEND+'/api/karyawan/addresign', params=pars)
 
         pars = { 'user_role', current_user.role }
-        r = requests.get('http://localhost:9966/api/karyawanresign/list?user_role='+str(current_user.role))
+        r = requests.get('http://'+BACKEND+'/api/karyawanresign/list?user_role='+str(current_user.role))
         
         return render_template('/karyawanresign.html', karyawan=r.json()['karyawan'])     
 
@@ -1031,17 +1008,10 @@ def daftarkaryawancuti():
 
     
     if request.method == 'GET':
-        # r = requests.get('http://localhost:9966/api/pmo/client')
-        # pm = requests.get('http://localhost:9966/api/pmo/listpm')
-        # sa = requests.get('http://localhost:9966/api/pmo/listsa')
-        dev = requests.get('http://localhost:9966/api/karyawan/list')
-        if(current_user.role!=6):
-            cuti = requests.get('http://localhost:9966/api/karyawan/listcuti')
-        else:
-            cuti = requests.get('http://localhost:9966/api/karyawan/sdolistcuti')
-        # qc = requests.get('http://localhost:9966/api/pmo/listqc')
-        # tw = requests.get('http://localhost:9966/api/pmo/listtw')
-        # pa = requests.get('http://localhost:9966/api/pmo/listpa')
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
+
+        cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
+
         return render_template('/daftarkaryawancuti.html', dev=dev.json()['karyawan'], cuti=cuti.json()['Cuti'])
 
 
@@ -1053,15 +1023,15 @@ def karyawanmutasi():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        # r = requests.get('http://localhost:9966/api/pmo/client')
-        # pm = requests.get('http://localhost:9966/api/pmo/listpm')
-        # sa = requests.get('http://localhost:9966/api/pmo/listsa')
+        # r = requests.get('http://'+BACKEND+'/api/pmo/client')
+        # pm = requests.get('http://'+BACKEND+'/api/pmo/listpm')
+        # sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
         # if(current_user.role!=6):
-        #     dev = requests.get('http://localhost:9966/api/karyawan/list')
+        #     dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
         # else:
-        dev = requests.get('http://localhost:9966/api/karyawan/listall')
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/listall')
             
-        cuti = requests.get('http://localhost:9966/api/karyawan/listcuti')
+        cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
         return render_template('/karyawanmutasi.html', dev=dev.json()['karyawan'], cuti=cuti.json()['Cuti'])
 
     else:
@@ -1071,12 +1041,12 @@ def karyawanmutasi():
         divisi = request.form['divisi']
         tanggalmutasi = request.form['tanggalmutasi']
         ket = request.form['ket']
-        # mutasi = requests.get('http://localhost:9966/api/karyawan/listcuti')
+        # mutasi = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
 
         if 'submit' in request.form:
             pars = { 'karyawan': karyawan, 'divisi' : divisi, 'createdby' : createdby, 'tanggalmutasi':tanggalmutasi, 'ket': ket }
 
-            requests.post('http://localhost:9966/api/karyawan/mutasi', params=pars)
+            requests.post('http://'+BACKEND+'/api/karyawan/mutasi', params=pars)
 
         return redirect(url_for('base_blueprint.daftarkaryawanmutasi'))      
 
@@ -1089,17 +1059,17 @@ def daftarkaryawanmutasi():
 
     
     if request.method == 'GET':
-        # r = requests.get('http://localhost:9966/api/pmo/client')
-        # pm = requests.get('http://localhost:9966/api/pmo/listpm')
-        # sa = requests.get('http://localhost:9966/api/pmo/listsa')
-        dev = requests.get('http://localhost:9966/api/karyawan/list')
+        # r = requests.get('http://'+BACKEND+'/api/pmo/client')
+        # pm = requests.get('http://'+BACKEND+'/api/pmo/listpm')
+        # sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
         if(current_user.role!=6):
-            mutasi = requests.get('http://localhost:9966/api/karyawan/listmutasi')
+            mutasi = requests.get('http://'+BACKEND+'/api/karyawan/listmutasi')
         else:
-            mutasi = requests.get('http://localhost:9966/api/karyawan/listmutasi')
-        # qc = requests.get('http://localhost:9966/api/pmo/listqc')
-        # tw = requests.get('http://localhost:9966/api/pmo/listtw')
-        # pa = requests.get('http://localhost:9966/api/pmo/listpa')
+            mutasi = requests.get('http://'+BACKEND+'/api/karyawan/listmutasi')
+        # qc = requests.get('http://'+BACKEND+'/api/pmo/listqc')
+        # tw = requests.get('http://'+BACKEND+'/api/pmo/listtw')
+        # pa = requests.get('http://'+BACKEND+'/api/pmo/listpa')
         return render_template('/daftarkaryawanmutasi.html', dev=dev.json()['karyawan'], mutasi=mutasi.json()['Mutasi'])
 
 @blueprint.route('/challengelist', methods=['GET', 'POST'])
@@ -1110,17 +1080,17 @@ def challengelist():
 
     
     if request.method == 'GET':
-        # r = requests.get('http://localhost:9966/api/pmo/client')
-        # pm = requests.get('http://localhost:9966/api/pmo/listpm')
-        # sa = requests.get('http://localhost:9966/api/pmo/listsa')
-        dev = requests.get('http://localhost:9966/api/karyawan/list')
+        # r = requests.get('http://'+BACKEND+'/api/pmo/client')
+        # pm = requests.get('http://'+BACKEND+'/api/pmo/listpm')
+        # sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
         if(current_user.role!=6):
-            challenge = requests.get('http://localhost:9966/api/karyawan/listchallenge')
+            challenge = requests.get('http://'+BACKEND+'/api/karyawan/listchallenge')
         else:
-            challenge = requests.get('http://localhost:9966/api/karyawan/listchallenge')
-        # qc = requests.get('http://localhost:9966/api/pmo/listqc')
-        # tw = requests.get('http://localhost:9966/api/pmo/listtw')
-        # pa = requests.get('http://localhost:9966/api/pmo/listpa')
+            challenge = requests.get('http://'+BACKEND+'/api/karyawan/listchallenge')
+        # qc = requests.get('http://'+BACKEND+'/api/pmo/listqc')
+        # tw = requests.get('http://'+BACKEND+'/api/pmo/listtw')
+        # pa = requests.get('http://'+BACKEND+'/api/pmo/listpa')
         return render_template('/daftarkaryawanchallenge.html', dev=dev.json()['karyawan'], challenge=challenge.json()['Challenge'])
 
 @blueprint.route('/addchallenge', methods=['GET', 'POST'])
@@ -1131,15 +1101,15 @@ def addchallenge():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        # r = requests.get('http://localhost:9966/api/pmo/client')
-        # pm = requests.get('http://localhost:9966/api/pmo/listpm')
-        # sa = requests.get('http://localhost:9966/api/pmo/listsa')
+        # r = requests.get('http://'+BACKEND+'/api/pmo/client')
+        # pm = requests.get('http://'+BACKEND+'/api/pmo/listpm')
+        # sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
         # if(current_user.role!=6):
-        #     dev = requests.get('http://localhost:9966/api/karyawan/list')
+        #     dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
         # else:
-        dev = requests.get('http://localhost:9966/api/karyawan/list?user_role='+str(current_user.role))
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/list?user_role='+str(current_user.role))
             
-        # cuti = requests.get('http://localhost:9966/api/karyawan/listcuti')
+        # cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
         return render_template('/addchallenge.html', dev=dev.json()['karyawan'])
 
     else:
@@ -1149,13 +1119,13 @@ def addchallenge():
         posisi = request.form['posisi']
         start = request.form['start']
         end = request.form['end']
-        # mutasi = requests.get('http://localhost:9966/api/karyawan/listcuti')
+        # mutasi = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
 
         if 'submit' in request.form:
             pars = { 'karyawan': karyawan, 'posisi' : posisi, 'start': start, 'end': end,'createdby' : createdby }
 
             #print(pars, flush=True)
-            requests.post('http://localhost:9966/api/karyawan/addchallenge', params=pars)
+            requests.post('http://'+BACKEND+'/api/karyawan/addchallenge', params=pars)
 
         return redirect(url_for('base_blueprint.challengelist'))
 
@@ -1168,14 +1138,14 @@ def karyawancovid():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        # r = requests.get('http://localhost:9966/api/pmo/client')
-        # pm = requests.get('http://localhost:9966/api/pmo/listpm')
-        # sa = requests.get('http://localhost:9966/api/pmo/listsa')
-        dev = requests.get('http://localhost:9966/api/karyawan/listucovid')
-        # cuti = requests.get('http://localhost:9966/api/karyawan/listcuti')
-        # qc = requests.get('http://localhost:9966/api/pmo/listqc')
-        # tw = requests.get('http://localhost:9966/api/pmo/listtw')
-        # pa = requests.get('http://localhost:9966/api/pmo/listpa')
+        # r = requests.get('http://'+BACKEND+'/api/pmo/client')
+        # pm = requests.get('http://'+BACKEND+'/api/pmo/listpm')
+        # sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/listucovid')
+        # cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
+        # qc = requests.get('http://'+BACKEND+'/api/pmo/listqc')
+        # tw = requests.get('http://'+BACKEND+'/api/pmo/listtw')
+        # pa = requests.get('http://'+BACKEND+'/api/pmo/listpa')
         return render_template('/karyawancovid.html', dev=dev.json()['karyawan'])
 
     else:
@@ -1183,14 +1153,14 @@ def karyawancovid():
 
         createdby = current_user.username
 
-        # dev = requests.get('http://localhost:9966/api/karyawan/list')
+        # dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
         dev = request.form.getlist('dev')
-        cuti = requests.get('http://localhost:9966/api/karyawan/listcovid')
+        cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcovid')
 
         # print(qc, flush=True)
         
         
-        # requests.post('http://localhost:9966/api/karyawan/add', params=pars)
+        # requests.post('http://'+BACKEND+'/api/karyawan/add', params=pars)
 
 
         if 'register' in request.form:
@@ -1207,11 +1177,11 @@ def karyawancovid():
             pars = { 'resource_name': dev[0], 'tanggal' : tanggal, 'keterangan' : keterangan, 'status': status }
                 # print(pars, flush=True)
 
-            requests.post('http://localhost:9966/api/karyawan/covid', params=pars)
+            requests.post('http://'+BACKEND+'/api/karyawan/covid', params=pars)
                 # i += 1
             ###################For QC
             
-        # devl = requests.get('http://localhost:9966/api/karyawan/list')
+        # devl = requests.get('http://'+BACKEND+'/api/karyawan/list')
 
         # return render_template('/daftarkaryawancuti.html', dev=devl.json()['karyawan'], cuti=cuti.json()['Cuti'])  
         return redirect(url_for('base_blueprint.daftarkaryawancovid'))      
@@ -1225,14 +1195,14 @@ def daftarkaryawancovid():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        # r = requests.get('http://localhost:9966/api/pmo/client')
-        # pm = requests.get('http://localhost:9966/api/pmo/listpm')
-        # sa = requests.get('http://localhost:9966/api/pmo/listsa')
-        # dev = requests.get('http://localhost:9966/api/karyawan/covid')
-        cuti = requests.get('http://localhost:9966/api/karyawan/listcovid')
-        # qc = requests.get('http://localhost:9966/api/pmo/listqc')
-        # tw = requests.get('http://localhost:9966/api/pmo/listtw')
-        # pa = requests.get('http://localhost:9966/api/pmo/listpa')
+        # r = requests.get('http://'+BACKEND+'/api/pmo/client')
+        # pm = requests.get('http://'+BACKEND+'/api/pmo/listpm')
+        # sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
+        # dev = requests.get('http://'+BACKEND+'/api/karyawan/covid')
+        cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcovid')
+        # qc = requests.get('http://'+BACKEND+'/api/pmo/listqc')
+        # tw = requests.get('http://'+BACKEND+'/api/pmo/listtw')
+        # pa = requests.get('http://'+BACKEND+'/api/pmo/listpa')
         return render_template('/daftarkaryawancovid.html', cuti=cuti.json()['Covid'])
 
 
@@ -1247,20 +1217,20 @@ def project_detail(id_project):
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        sa = requests.get('http://localhost:9966/api/pmo/listsa')
-        dev = requests.get('http://localhost:9966/api/pmo/listdev')
-        qc = requests.get('http://localhost:9966/api/pmo/listqc')
-        tw = requests.get('http://localhost:9966/api/pmo/listtw')
-        pa = requests.get('http://localhost:9966/api/pmo/listpa')
+        sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
+        dev = requests.get('http://'+BACKEND+'/api/pmo/listdev')
+        qc = requests.get('http://'+BACKEND+'/api/pmo/listqc')
+        tw = requests.get('http://'+BACKEND+'/api/pmo/listtw')
+        pa = requests.get('http://'+BACKEND+'/api/pmo/listpa')
 
         pars = { 'id_project' : id_project }
-        r = requests.get('http://localhost:9966/api/pmo/project',params=pars)
-        s = requests.get('http://localhost:9966/api/pmo/project/pm',params=pars)
-        t = requests.get('http://localhost:9966/api/pmo/project/sa',params=pars)
-        u = requests.get('http://localhost:9966/api/pmo/project/dev',params=pars)
-        v = requests.get('http://localhost:9966/api/pmo/project/pa',params=pars)
-        w = requests.get('http://localhost:9966/api/pmo/project/qc',params=pars)
-        x = requests.get('http://localhost:9966/api/pmo/project/tw',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/pmo/project',params=pars)
+        s = requests.get('http://'+BACKEND+'/api/pmo/project/pm',params=pars)
+        t = requests.get('http://'+BACKEND+'/api/pmo/project/sa',params=pars)
+        u = requests.get('http://'+BACKEND+'/api/pmo/project/dev',params=pars)
+        v = requests.get('http://'+BACKEND+'/api/pmo/project/pa',params=pars)
+        w = requests.get('http://'+BACKEND+'/api/pmo/project/qc',params=pars)
+        x = requests.get('http://'+BACKEND+'/api/pmo/project/tw',params=pars)
 
         return render_template('/project_detail.html',pid=id_project, project=r.json()['Project'],pm=s.json()['Project'],sa=t.json()['Project'],dev=u.json()['Project'], \
             pa=v.json()['Project'],qc=w.json()['Project'],tw=x.json()['Project'], \
@@ -1285,7 +1255,7 @@ def project_detail(id_project):
                         }
                     
             #print(pars, flush=True)
-            requests.post('http://localhost:9966/api/pmo/project/updtgl', params=pars)
+            requests.post('http://'+BACKEND+'/api/pmo/project/updtgl', params=pars)
 
 
         if 'deleteresource' in request.form:
@@ -1296,7 +1266,7 @@ def project_detail(id_project):
                         }
                     
             #print(pars, flush=True)
-            requests.post('http://localhost:9966/api/pmo/project/delres', params=pars)
+            requests.post('http://'+BACKEND+'/api/pmo/project/delres', params=pars)
 
 
 
@@ -1338,7 +1308,7 @@ def project_detail(id_project):
                         }
                     
                     #print(pars, flush=True)
-                    requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+                    requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
                     i += 1
             ###################For QC
             if len(qc) >= 1 and qc[0] != '':
@@ -1358,7 +1328,7 @@ def project_detail(id_project):
                         }
                     
                     #print(pars, flush=True)
-                    requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+                    requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
                     i += 1
 
             ###################For TW
@@ -1379,7 +1349,7 @@ def project_detail(id_project):
                         }
                     
                     #print(pars, flush=True)
-                    requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+                    requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
                     i += 1
 
             ###################For SA
@@ -1397,23 +1367,23 @@ def project_detail(id_project):
                     }
                 
                 #print(pars, flush=True)
-                requests.post('http://localhost:9966/api/pmo/project/add', params=pars)
+                requests.post('http://'+BACKEND+'/api/pmo/project/add', params=pars)
 
 
-        sa = requests.get('http://localhost:9966/api/pmo/listsa')
-        dev = requests.get('http://localhost:9966/api/pmo/listdev')
-        qc = requests.get('http://localhost:9966/api/pmo/listqc')
-        tw = requests.get('http://localhost:9966/api/pmo/listtw')
-        pa = requests.get('http://localhost:9966/api/pmo/listpa')
+        sa = requests.get('http://'+BACKEND+'/api/pmo/listsa')
+        dev = requests.get('http://'+BACKEND+'/api/pmo/listdev')
+        qc = requests.get('http://'+BACKEND+'/api/pmo/listqc')
+        tw = requests.get('http://'+BACKEND+'/api/pmo/listtw')
+        pa = requests.get('http://'+BACKEND+'/api/pmo/listpa')
 
         pars = { 'id_project' : id_project }
-        r = requests.get('http://localhost:9966/api/pmo/project',params=pars)
-        s = requests.get('http://localhost:9966/api/pmo/project/pm',params=pars)
-        t = requests.get('http://localhost:9966/api/pmo/project/sa',params=pars)
-        u = requests.get('http://localhost:9966/api/pmo/project/dev',params=pars)
-        v = requests.get('http://localhost:9966/api/pmo/project/pa',params=pars)
-        w = requests.get('http://localhost:9966/api/pmo/project/qc',params=pars)
-        x = requests.get('http://localhost:9966/api/pmo/project/tw',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/pmo/project',params=pars)
+        s = requests.get('http://'+BACKEND+'/api/pmo/project/pm',params=pars)
+        t = requests.get('http://'+BACKEND+'/api/pmo/project/sa',params=pars)
+        u = requests.get('http://'+BACKEND+'/api/pmo/project/dev',params=pars)
+        v = requests.get('http://'+BACKEND+'/api/pmo/project/pa',params=pars)
+        w = requests.get('http://'+BACKEND+'/api/pmo/project/qc',params=pars)
+        x = requests.get('http://'+BACKEND+'/api/pmo/project/tw',params=pars)
 
         return render_template('/project_detail.html', project=r.json()['Project'],pm=s.json()['Project'],sa=t.json()['Project'],dev=u.json()['Project'], \
             pa=v.json()['Project'],qc=w.json()['Project'],tw=x.json()['Project'], \
@@ -1431,7 +1401,7 @@ def adddinas():
 
     if request.method == 'GET':
 
-        karyawanpmo = requests.get('http://localhost:9966/api/pmo/karyawan')
+        karyawanpmo = requests.get('http://'+BACKEND+'/api/pmo/karyawan')
 
         return render_template('/adddinas.html',karyawanpmo = karyawanpmo.json()['Karyawan'])
     else:
@@ -1443,12 +1413,12 @@ def adddinas():
             'nama': nama, \
             'alamat': alamat \
             }
-        # requests.post('http://localhost:9966/api/karyawan/add', params=pars)
+        # requests.post('http://'+BACKEND+'/api/karyawan/add', params=pars)
 
 
         if 'register' in request.form:
             
-            addclient = requests.post('http://localhost:9966/api/pmo/addclient', params=pars)
+            addclient = requests.post('http://'+BACKEND+'/api/pmo/addclient', params=pars)
 
         return redirect(url_for('base_blueprint.pmoclient'))
 
@@ -1529,7 +1499,7 @@ def boarddaily():
         bulan = datetime.today().strftime('%b')
         tahun = datetime.today().strftime('%Y')
         path = '/home/dolants/baback/Vang_2020.xlsx'
-        pas = requests.get('http://localhost:9966/api/trello/boarddaily')
+        pas = requests.get('http://'+BACKEND+'/api/trello/boarddaily')
         print('HYIIIIIIIIII , ', flush=True)
         print(prii,flush=True)
         return send_file(path, as_attachment=True)
@@ -1546,7 +1516,7 @@ def monthly_detail(trelloid):
         bulan = datetime.today().strftime('%Y-%m')
         print(bulan, flush=True)
         pars = { 'trelloid' : trelloid, 'bulan': bulan }
-        r = requests.get('http://localhost:9966/api/trello/monthlyact',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/trello/monthlyact',params=pars)
 
         return render_template('/pmo/monthly_detail.html', bulanB = bulanB, detail=r.json()['detail'])
     else:
@@ -1562,7 +1532,7 @@ def monthly_detail(trelloid):
             tahun  = bulan[0:4]
 
             pars = { 'bulan': bulan, 'trelloid': trelloid }
-            r = requests.get('http://localhost:9966/api/trello/monthlyact',params=pars)
+            r = requests.get('http://'+BACKEND+'/api/trello/monthlyact',params=pars)
          
             return render_template('/pmo/monthly_detail.html', bulanB = bulanB, detail=r.json()['detail'])
         
@@ -1580,7 +1550,7 @@ def monthly_detail(trelloid):
             tahun  = bulan[0:4]
             pars = { 'bulan': bulan, 'trelloid': trelloid }
             path = '/home/dolants/baback/Monthly_'+trelloid+'_'+bulan+'.xlsx'
-            pas = requests.get('http://localhost:9966/api/trello/monthlyact', params=pars)
+            pas = requests.get('http://'+BACKEND+'/api/trello/monthlyact', params=pars)
             #print('HYIIIIIIIIII SUKSES , ', flush=True)
             
             # print('Masuk Pak Eko', flush=True)
@@ -1588,7 +1558,7 @@ def monthly_detail(trelloid):
             # tanggal = tanggalx[0:7]
             # pars = { 'boardid' : boardid, 'tanggal' : tanggal }
             # path = '/home/dolants/baback/MonthlyDetail_'+boardid+'_'+tanggal+'.xlsx'
-            # r = requests.get('http://localhost:9966/api/trello/boarddetailmonthly', params=pars)
+            # r = requests.get('http://'+BACKEND+'/api/trello/boarddetailmonthly', params=pars)
             # return render_template('/pmo/monthly_detail.html', bulanB = bulanB, detail=pas.json()['detail'])
             return send_file(path, as_attachment=True)
         
@@ -1628,7 +1598,7 @@ def assignment_detail(assignment_id):
     if request.method == 'GET':
         
         pars = { 'assignment_id' : assignment_id }
-        r = requests.get('http://localhost:9966/api/karyawan/detailassignment',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/karyawan/detailassignment',params=pars)
 
         return render_template('/pmo/assignment_detail.html', proj=r.json()['Assignment'])
 
@@ -1650,18 +1620,18 @@ def assignment_detail(assignment_id):
             # print(pars, flush=True)
 
             #print(pars, flush=True)
-            v = requests.post('http://localhost:9966/api/karyawan/assignmentupdate',params=pars)
+            v = requests.post('http://'+BACKEND+'/api/karyawan/assignmentupdate',params=pars)
 
         # if 'resign' in request.form:
         #     username = request.form['username']
         #     pars = { 'username' : username }
 
-        #     v = requests.post('http://localhost:9966/api/karyawan/resign',params=pars)
+        #     v = requests.post('http://'+BACKEND+'/api/karyawan/resign',params=pars)
 
 
 
         pars = { 'assignment_id' : assignment_id }
-        r = requests.get('http://localhost:9966/api/karyawan/detailassignment',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/karyawan/detailassignment',params=pars)
 
         return render_template('/pmo/assignment_detail.html', proj=r.json()['Assignment'])
 
@@ -1675,9 +1645,9 @@ def assignment_delete(assignment_id):
     if request.method == 'GET':
         
         pars = { 'assignment_id' : assignment_id }
-        r = requests.get('http://localhost:9966/api/karyawan/assignment_delete',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/karyawan/assignment_delete',params=pars)
 
-    r = requests.get('http://localhost:9966/api/karyawan/listassignment')
+    r = requests.get('http://'+BACKEND+'/api/karyawan/listassignment')
     return render_template('/reportassignment.html', karyawan=r.json()['Assignment'])
     
 
@@ -1689,7 +1659,7 @@ def skills():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        dev = requests.get('http://localhost:9966/api/karyawan/skills')
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/skills')
             
         return render_template('/skills.html', karyawan=dev.json()['Skills'])
 
@@ -1705,7 +1675,7 @@ def skills():
             createdby = createdby
             pars = { 'karyawan': karyawan, 'skills' : skills, 'createdby': createdby }
 
-            requests.post('http://localhost:9966/api/karyawan/addskills', params=pars)
+            requests.post('http://'+BACKEND+'/api/karyawan/addskills', params=pars)
 
         return redirect(url_for('base_blueprint.addskill'))
 
@@ -1718,7 +1688,7 @@ def addskill():
         return redirect(url_for('base_blueprint.login'))
 
     if request.method == 'GET':
-        dev = requests.get('http://localhost:9966/api/karyawan/list?user_role='+str(current_user.role))
+        dev = requests.get('http://'+BACKEND+'/api/karyawan/list?user_role='+str(current_user.role))
             
         return render_template('/addskills.html', dev=dev.json()['karyawan'])
 
@@ -1727,11 +1697,11 @@ def addskill():
 
         createdby = current_user.username
 
-        # dev = requests.get('http://localhost:9966/api/karyawan/list')
+        # dev = requests.get('http://'+BACKEND+'/api/karyawan/list')
         # karyawan = request.form['karyawan']
         # skills = request.form['skills']
-        # cuti = requests.get('http://localhost:9966/api/karyawan/listcuti')
-        # dev = requests.get('http://localhost:9966/api/karyawan/list?user_role='+str(current_user.role))
+        # cuti = requests.get('http://'+BACKEND+'/api/karyawan/listcuti')
+        # dev = requests.get('http://'+BACKEND+'/api/karyawan/list?user_role='+str(current_user.role))
 
 
         if 'submit' in request.form:
@@ -1740,7 +1710,7 @@ def addskill():
             createdby = createdby
             pars = { 'karyawan': karyawan, 'skills' : skills, 'createdby': createdby }
 
-            requests.post('http://localhost:9966/api/karyawan/addskills', params=pars)
+            requests.post('http://'+BACKEND+'/api/karyawan/addskills', params=pars)
 
         return redirect(url_for('base_blueprint.skills'))      
 
@@ -1754,7 +1724,7 @@ def appraisalteam():
     user_id = current_user.username
     
     pars = { 'userid' : user_id }
-    r = requests.get('http://localhost:9966/api/pmo/appraisalteam',params=pars)
+    r = requests.get('http://'+BACKEND+'/api/pmo/appraisalteam',params=pars)
 
     return render_template('/pmo/appraisalteam.html', karyawan=r.json()['appraisalteam'])
 
@@ -1770,7 +1740,7 @@ def appraisaldetail(appraisalid):
 
     if request.method == 'GET':
         pars = { 'appraisalid' : appraisalid }
-        r = requests.get('http://localhost:9966/api/karyawan/appraisaldetail',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/karyawan/appraisaldetail',params=pars)
 
         return render_template('/appraisaldetail.html', karyawan=r.json()['Appraisal'])
 
@@ -1778,13 +1748,13 @@ def appraisaldetail(appraisalid):
         if 'delete' in request.form:
             pars = { 'appraisalid' : appraisalid }
 
-            v = requests.post('http://localhost:9966/api/karyawan/deleteappraisal',params=pars)
+            v = requests.post('http://'+BACKEND+'/api/karyawan/deleteappraisal',params=pars)
 
 
         user_id = current_user.username
         pars = { 'userid' : user_id }
         
-        r = requests.get('http://localhost:9966/api/pmo/appraisalteam',params=pars)
+        r = requests.get('http://'+BACKEND+'/api/pmo/appraisalteam',params=pars)
         
         return render_template('/pmo/appraisalteam.html', karyawan=r.json()['appraisalteam'])
 
@@ -1799,7 +1769,7 @@ def addappraisal(user_id):
 
     if request.method == 'GET':
         pars = { 'user_id' : user_id }
-        # r = requests.get('http://localhost:9966/api/karyawan',params=pars)
+        # r = requests.get('http://'+BACKEND+'/api/karyawan',params=pars)
 
         return render_template('/addappraisal.html', userid = user_id)
 
@@ -1817,11 +1787,11 @@ def addappraisal(user_id):
             'pm': pm, \
             'periode': periode
             }
-        # requests.post('http://localhost:9966/api/karyawan/add', params=pars)
+        # requests.post('http://'+BACKEND+'/api/karyawan/add', params=pars)
 
 
         if 'register' in request.form:
-            addkaryawan = requests.post('http://localhost:9966/api/karyawan/addappraisal', params=pars)
+            addkaryawan = requests.post('http://'+BACKEND+'/api/karyawan/addappraisal', params=pars)
             # print('BISA NIH CUY '+performance, flush=True)
             # print('BISA NIH CUY '+potential, flush=True)
             # print('BISA NIH CUY '+attitude, flush=True)
@@ -1848,11 +1818,11 @@ def jadwalappraisal():
             'nama': nama, \
             'alamat': alamat \
             }
-        # requests.post('http://localhost:9966/api/karyawan/add', params=pars)
+        # requests.post('http://'+BACKEND+'/api/karyawan/add', params=pars)
 
 
         if 'register' in request.form:
             
-            addclient = requests.post('http://localhost:9966/api/pmo/addclient', params=pars)
+            addclient = requests.post('http://'+BACKEND+'/api/pmo/addclient', params=pars)
 
         return redirect(url_for('base_blueprint.pmoclient'))
