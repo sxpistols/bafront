@@ -1,16 +1,11 @@
 {% extends "base_site.html" %}
-
 {% block title %} Profile {% endblock title %}
-
 {% block stylesheets %}
 {{ super() }}
 <link href="{{ url_for('static', filename='assets/css/bulma.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 {% endblock stylesheets %}
-
 {% block content %}
-
-
 <div class="row">
     <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
         <div class="row">
@@ -53,7 +48,6 @@
                                 <label for="exampleInputName1"
                                     class="col-sm-3 col-form-label form-control-sm font-weight-light">Tanggal
                                     Lahir</label>
-                                <!-- <input type="text" class="form-control col-sm-3 form-control-sm" name="tanggalmasuk" id="tanggalmasuk" placeholder="2007-02-27"> -->
                                 <input type="date" class="form-control col-sm-3 form-control-sm" name="tanggallahir"
                                     id="tanggallahir" data-date="" value="2000-08-17" required>
                             </div>
@@ -216,7 +210,6 @@
                                     <option value="Radar Engineer">Radar Engineer</option>
                                     <option value="Inventory Admin">Inventory Admin</option>
                                     <option value="Machine Learning Engineer">Machine Learning Engineer</option>
-
                                 </select>
                             </div>
                             <div class="form-group row">
@@ -238,16 +231,13 @@
                                     <option value="Yogyakarta">Yogyakarta</option>
                                 </select>
                             </div>
-
                             <div class="form-group row">
                                 <label for="exampleInputName1"
                                     class="col-sm-3 col-form-label form-control-sm font-weight-light">Tanggal
                                     Bergabung</label>
-                                <!-- <input type="text" class="form-control col-sm-3 form-control-sm" name="tanggalmasuk" id="tanggalmasuk" placeholder="2007-02-27"> -->
                                 <input type="date" class="form-control col-sm-3 form-control-sm" name="tanggalmasuk"
                                     id="tanggalmasuk" data-date="" value="2000-08-17" required>
                             </div>
-
                             <div class="form-group row">
                                 <label for="exampleInputEmail3"
                                     class="col-sm-3 col-form-label form-control-sm font-weight-light">User Role
@@ -264,20 +254,15 @@
                                         class="btn btn-success btn-sm">Submit</button>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
         {% include "site_template/footer.html" %}
-
     </div>
 </div>
-
 {% endblock content %}
-
 {% block javascripts %}
 {{ super()}}
 {% endblock javascripts %}

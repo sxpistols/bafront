@@ -1,25 +1,16 @@
 {% extends "base_site.html" %}
-
 {% block title %} Karyawan {% endblock title %}
-
 {% block stylesheets %}
 {{ super() }}
-
 <link href="{{ url_for('static', filename='assets/css/bulma.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-
-<!-- Icons -->
 <link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}"
     rel="stylesheet">
-<!-- CSS Files -->
 <link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
-
 {% endblock stylesheets %}
-
 {% block content %}
 <div class="row">
     <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
@@ -79,9 +70,6 @@
                                             <th style="text-align: center;"> 29 </th>
                                             <th style="text-align: center;"> 30 </th>
                                             <th style="text-align: center;"> 31 </th>
-                                            <!-- <th> Site </th> -->
-                                            <!-- <th> Supervisor </th> -->
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -165,33 +153,16 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 {% endblock content %}
-
 {% block javascripts %}
-
-
-
 <script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-
 <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-
-<!-- Argon JS -->
 <script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
-
 <script type="text/JavaScript">
     $(document).ready(function() {
         var t = $('#example').DataTable( {
@@ -216,31 +187,17 @@
             } );
         } ).draw();
     } );
-
     var date = new Date();
-
     var day = date.getDate();
     var month = date.getMonth() + 1;
     var year = date.getFullYear();
-
     if (month < 10) month = "0" + month;
     if (day < 10) day = "0" + day;
-
     var today = year + "-" + month;
-
-
     document.getElementById('bulan').value = today;
-
 </script>
 <script type="text/Javascript">
-
 </script>
-
 {% endblock javascripts %}
-
-
-
-
-
 {% block extra_javascripts %}
 {% endblock extra_javascripts %}

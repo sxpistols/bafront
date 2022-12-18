@@ -1,35 +1,22 @@
 {% extends "base_site.html" %}
-
 {% block title %} Karyawan {% endblock title %}
-
 {% block stylesheets %}
   {{ super() }}
-  
     <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    
-    <!-- Icons -->
     <link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <!-- CSS Files -->
     <link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
-    
 {% endblock stylesheets %}
-
 {% block content %}
-
     <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
-        
         <div class="row">
             <div class="col">
                 <div class="card shadow">
                     <div class="card-header bg-transparent">
                         <h3 class="mb-0">Daftar Project</h3>
                     </div>
-
-                        
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="example" class="display table table-striped table-bordered" style="width: 100%;">
@@ -39,10 +26,6 @@
                                             <th style="width: 25%;"> Nama Project </th>
                                             <th style="text-align: center"> Url Project </th>
                                             <th style="text-align: center"> Last Activity Project </th>
-                                            
-                                            <!-- <th> Site </th> -->
-                                            <!-- <th> Supervisor </th> -->
-
                                         </tr>
                                     </thead>
                                     <tbody>

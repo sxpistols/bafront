@@ -1,22 +1,15 @@
 {% extends "base_site.html" %}
-
 {% block title %} Karyawan {% endblock title %}
-
 {% block stylesheets %}
 {{ super() }}
-
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
-
 <link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}"
     rel="stylesheet">
 <link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
-
 {% endblock stylesheets %}
-
 {% block content %}
 <div class="row">
     <div class="container-fluid" style="padding-top: 30px;">
@@ -44,7 +37,6 @@
                                         <th style="text-align: center;"> Lama Bekerja</th>
                                         <th style="text-align: center;"> Posisi </th>
                                         <th style="text-align: center;"> Divisi </th>
-                                        <th style="text-align: center;"> Resource </th>
                                         <th style="text-align: center;"> Jurusan </th>
                                         <th style="text-align: center;"> Pendidikan </th>
 
@@ -64,7 +56,6 @@
                                             {{karyawan["day"]}} Hari</td>
                                         <td align="left"> {{karyawan["posisi"]}} </td>
                                         <td align="left"> {{karyawan["divisi"]}} </td>
-                                        <td align="left"> {{karyawan["resource"]}} </td>
                                         <td align="left"> {{karyawan["jurusan"] | default("",True)}} </td>
                                         <td> {{karyawan["pendidikan"]| default("",True)}} </td>
                                     </tr>
@@ -78,33 +69,16 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 {% endblock content %}
-
 {% block javascripts %}
-
-
-
 <script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-
 <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-
-<!-- Argon JS -->
 <script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
-
 <script type="text/JavaScript">
     $('#example').DataTable({
     "pageLength": 25,
@@ -114,15 +88,8 @@
             "last": "Next",
         }
     }
-
     } );
 </script>
-
 {% endblock javascripts %}
-
-
-
-
-
 {% block extra_javascripts %}
 {% endblock extra_javascripts %}

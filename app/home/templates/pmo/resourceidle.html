@@ -1,180 +1,152 @@
 {% extends "base_site.html" %}
-
 {% block title %} Karyawan {% endblock title %}
-
 {% block stylesheets %}
-  {{ super() }}
-  
-    <link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    
-    <!-- Icons -->
-    <link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
-    <!-- CSS Files -->
-    <link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
-    
-{% endblock stylesheets %}
+{{ super() }}
+<link href="{{ url_for('static', filename='assets/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/img/brand/favicon.png') }}" rel="icon" type="image/png">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
+<!-- Icons -->
+<link href="{{ url_for('static', filename='assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css') }}"
+    rel="stylesheet">
+<!-- CSS Files -->
+<link href="{{ url_for('static', filename='assets/css/argon-dashboard.css') }}" rel="stylesheet">
+{% endblock stylesheets %}
 {% block content %}
 
-    <div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
-        
-        <div class="row">
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-content bg-transparent">
-                        <h3 class="mb-0">Resource Idle</h3>
-                    </div>
+<div class="container-fluid" style="padding-top: 20px;padding-left: 10px;">
 
-                    <form class="forms-sample" method="POST" id="downloadreport" role="form">
-                        
-                        <div class="card-header bg-transparent">
-                            <input type="date" class="form-control col-sm-2 form-control-sm" name="tanggal" id="dateDefault"
-                                data-date="" value="" required>
-                            <br>
-                            <div class="pl-3">
-                                <button type="submit" name='show' id="daily" class="btn btn-primary btn-sm"> Show
-                                </button>
-                                
-                                
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="example" class="display table table-striped table-bordered" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;"> No</th>
-                                            <th style="width: 25%;"> Nama Resource</th>
-                                            <th style="text-align: center"> Keterangan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% set count = namespace(value=1) %}
-                                        {% for cl in proj %}
-                                        <tr>
-                                            <td style="text-align: right;"> {{ count.value }} </td>
-                                            {% set count.value = count.value + 1 %}
-                                            <td> {{cl["fullname"] }} </td>
-                                            <td> {{cl["keterangan"] | default("",True) }} </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </form>
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-content bg-transparent">
+                    <h3 class="mb-0">Resource Idle</h3>
                 </div>
+
+                <form class="forms-sample" method="POST" id="downloadreport" role="form">
+
+                    <div class="card-header bg-transparent">
+                        <input type="date" class="form-control col-sm-2 form-control-sm" name="tanggal" id="dateDefault"
+                            data-date="" value="" required>
+                        <br>
+                        <div class="pl-3">
+                            <button type="submit" name='show' id="daily" class="btn btn-primary btn-sm"> Show
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="example" class="display table table-striped table-bordered" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;"> No</th>
+                                        <th style="width: 25%;"> Nama Resource</th>
+                                        <th style="text-align: center"> Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% set count = namespace(value=1) %}
+                                    {% for cl in proj %}
+                                    <tr>
+                                        <td style="text-align: right;"> {{ count.value }} </td>
+                                        {% set count.value = count.value + 1 %}
+                                        <td> {{cl["fullname"] }} </td>
+                                        <td> {{cl["keterangan"] | default("",True) }} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-
-
-
-
-       
-
+</div>
 {% endblock content %}
-
- {% block javascripts %}
-
- 
-
+{% block javascripts %}
 <script src="{{ url_for('static', filename='assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/js/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
 
-    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/plugins/chart.js/dist/Chart.extension.js') }}"></script>
-    <script src="{{ url_for('static', filename='assets/js/plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    
-    <!-- Argon JS -->
-    <script src="{{ url_for('static', filename='assets/js/argon-dashboard.js') }}"></script>
-
-<script type = "text/JavaScript">
-    $(document).ready(function() {
-    var t = $('#example').DataTable( {
-        "pageLength": 100,
-        "language": {
-            "paginate": {
-                "previous": "Prev",
-                "last": "Next",
-            },
+<script type="text/JavaScript">
+$(document).ready(function() {
+var t = $('#example').DataTable( {
+    "pageLength": 100,
+    "language": {
+        "paginate": {
+            "previous": "Prev",
+            "last": "Next",
         },
-        "columnDefs": [ {
-            "searchable": false,
-            "orderable": false,
-            "targets": 0
-        } ],
-        "order": [[ 1, 'asc' ]]
+    },
+    "columnDefs": [ {
+        "searchable": false,
+        "orderable": false,
+        "targets": 0
+    } ],
+    "order": [[ 1, 'asc' ]]
+} );
+
+t.on( 'order.dt search.dt', function () {
+    t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+        cell.innerHTML = i+1;
     } );
- 
-    t.on( 'order.dt search.dt', function () {
-        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-            cell.innerHTML = i+1;
-        } );
-    } ).draw();
+} ).draw();
 } );
 </script>
 <script>
-        $('#confirm-approve').on('show.bs.modal', function(e) {
-            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-            
-            $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
-        });
-    </script>
+    $('#confirm-approve').on('show.bs.modal', function (e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 
-    <script>
-        $('#confirm-delete').on('click', '.btn-ok', function(e) {
-            var $modalDiv = $(e.delegateTarget);
-            var id = $(this).data('recordId');
-            $.post('/pmoproject', { id_project: id} ).then()
-             $modalDiv.addClass('loading');
-                setTimeout(function() {
-                    $modalDiv.modal('hide').removeClass('loading');
-                }, 1000)
-             document.location.reload();
-        });
-        $('#confirm-delete').on('show.bs.modal', function(e) {
-            var data = $(e.relatedTarget).data();
-            $('.title', this).text(data.recordTitle);
-            $('.btn-ok', this).data('recordId', data.recordId);
-        });
-    </script>
-    <script>
-        function setInputDate(_id){
-            var _dat = document.querySelector(_id);
-            var hoy = new Date(),
-                d = hoy.getDate(),
-                m = hoy.getMonth()+1, 
-                y = hoy.getFullYear(),
-                data;
-        
-            if(d < 10){
-                d = "0"+d;
-            };
-            if(m < 10){
-                m = "0"+m;
-            };
-        
-            data = y+"-"+m+"-"+d;
-            console.log(data);
-            _dat.value = data;
+        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+    });
+</script>
+<script>
+    $('#confirm-delete').on('click', '.btn-ok', function (e) {
+        var $modalDiv = $(e.delegateTarget);
+        var id = $(this).data('recordId');
+        $.post('/pmoproject', { id_project: id }).then()
+        $modalDiv.addClass('loading');
+        setTimeout(function () {
+            $modalDiv.modal('hide').removeClass('loading');
+        }, 1000)
+        document.location.reload();
+    });
+    $('#confirm-delete').on('show.bs.modal', function (e) {
+        var data = $(e.relatedTarget).data();
+        $('.title', this).text(data.recordTitle);
+        $('.btn-ok', this).data('recordId', data.recordId);
+    });
+</script>
+<script>
+    function setInputDate(_id) {
+        var _dat = document.querySelector(_id);
+        var hoy = new Date(),
+            d = hoy.getDate(),
+            m = hoy.getMonth() + 1,
+            y = hoy.getFullYear(),
+            data;
+
+        if (d < 10) {
+            d = "0" + d;
         };
-        
-        setInputDate("#dateDefault");
-    </script>
+        if (m < 10) {
+            m = "0" + m;
+        };
 
-  {% endblock javascripts %}
-
-
-
-
-
+        data = y + "-" + m + "-" + d;
+        console.log(data);
+        _dat.value = data;
+    };
+    setInputDate("#dateDefault");
+</script>
+{% endblock javascripts %}
 {% block extra_javascripts %}
 {% endblock extra_javascripts %}
