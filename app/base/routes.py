@@ -72,7 +72,8 @@ def login():
         s = requests.get('http://'+BACKEND+'/api/trello/getlastten?user_role='+str(current_user.role))
         pars = { 'user_role', current_user.role }
         r = requests.get('http://'+BACKEND+'/api/karyawan/list?user_role='+str(current_user.role))
-        return render_template('/karyawan.html', karyawan=r.json()['karyawan'])
+        return render_template('/pmo/index.html', lastten=s.json()['LastTen'])
+        # return render_template('/karyawan.html', karyawan=r.json()['karyawan'])
 
     elif current_user.role != 2 and current_user.role != 5:
         return redirect(url_for('home_blueprint.index'))

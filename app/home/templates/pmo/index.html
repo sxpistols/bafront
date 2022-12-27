@@ -40,7 +40,7 @@
               {% for cl in lastten %}
               <tr>
                 <th scope="row">
-                  <a href="/board_detail/{{ cl['id'] }}">{{ cl["name"] }} </a>
+                  <a href="{{ cl['url'] }}">{{ cl["name"] }} </a>
                 </th>
                 <td>
                   {{ cl["fullname"] }}
