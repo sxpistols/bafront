@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.11.5
 
 ENV FLASK_APP run.py
 
